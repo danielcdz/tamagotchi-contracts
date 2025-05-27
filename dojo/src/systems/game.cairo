@@ -85,23 +85,20 @@ pub mod game {
             store.new_beast_status_random_values(current_beast_id);
             store.new_beast(current_beast_id, specie, beast_type);
 
-            store.init_player_food(current_beast_id);
+            store.init_player_food_random_values(current_beast_id);
 
             self.beast_counter.write(current_beast_id+1);
         }
 
+        // Use only for testing purposes
         fn spawn_beast_custom_status(ref self: ContractState, specie: u8, beast_type: u8, beast_status: BeastStatusCustom) {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
             
-            let current_beast_id = self.beast_counter.read();
-
             store.new_beast_status_custom_values(beast_status);
-            store.new_beast(current_beast_id, specie, beast_type);
+            store.new_beast(beast_status.beast_id, specie, beast_type);
 
-            store.init_player_food(current_beast_id);
-
-            self.beast_counter.write(current_beast_id+1);
+            store.init_player_food_custom_values(beast_status.beast_id);
         }
 
         // This method is used to update the beast related data and write it to the world

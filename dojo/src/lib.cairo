@@ -8,6 +8,7 @@ pub mod achievements{
 pub mod helpers {
     pub mod timestamp;
     pub mod pseudo_random;
+    pub mod random;
 }
 
 pub mod systems {
@@ -33,6 +34,10 @@ pub mod types {
     pub mod beast;
     pub mod clean_status;
     pub mod beast_status_custom;
+}
+
+pub mod interfaces {
+    pub mod vrf;
 }
 
 #[cfg(test)]

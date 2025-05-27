@@ -17,6 +17,10 @@ mod tests {
     // Event import
     use tamagotchi::events::push::{PushToken};
 
+    // Types import
+    use tamagotchi::types::beast_status_custom::{BeastStatusCustom};
+    use tamagotchi::types::clean_status::{CleanStatus};
+
     #[test]
     #[available_gas(40000000)]
     fn test_spawn_player() {
@@ -47,8 +51,20 @@ mod tests {
         // Initialize player
         player_system.spawn_player();
         
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 3,
+            is_alive: true,
+            is_awake: true,
+            hunger: 50,
+            energy: 1,
+            happiness: 50,
+            hygiene: 50,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+        
         // Spawn a beast first
-        game_system.spawn_beast(1, 1); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
 
         // Set current beast
         let beast_id: u16 = 1;
@@ -70,10 +86,34 @@ mod tests {
 
         // Initialize player
         player_system.spawn_player();
+
+        let custom_beast_status_1 =  BeastStatusCustom {
+            beast_id: 3,
+            is_alive: true,
+            is_awake: true,
+            hunger: 50,
+            energy: 1,
+            happiness: 50,
+            hygiene: 50,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
+        let custom_beast_status_2 =  BeastStatusCustom {
+            beast_id: 3,
+            is_alive: true,
+            is_awake: true,
+            hunger: 50,
+            energy: 1,
+            happiness: 50,
+            hygiene: 50,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
         
         // Spawn multiple beasts
-        game_system.spawn_beast(1 ,2); // First beast
-        game_system.spawn_beast(2, 3); // Second beast
+        game_system.spawn_beast_custom_status(1 ,2, custom_beast_status_1); // First beast
+        game_system.spawn_beast_custom_status(2, 3, custom_beast_status_2); // Second beast
         
         // Set and verify we can switch between beasts
         player_system.set_current_beast(1);

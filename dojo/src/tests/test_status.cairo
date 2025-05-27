@@ -24,9 +24,21 @@ mod tests {
         cheat_caller_address(PLAYER());
         cheat_block_timestamp(7000000);
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 55,
+            energy: 44,
+            happiness: 66,
+            hygiene: 77,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Create player, food, and beast
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         // Get new timestamp calculated status
@@ -62,9 +74,21 @@ mod tests {
 
         cheat_caller_address(PLAYER());
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 80,
+            energy: 80,
+            happiness: 80,
+            hygiene: 80,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
         player_system.set_current_beast(1);
 
         // Make beast sleep first
@@ -96,9 +120,21 @@ mod tests {
         cheat_caller_address(PLAYER());
         cheat_block_timestamp(7000000);
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 100,
+            energy: 100,
+            happiness: 100,
+            hygiene: 100,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Create player, food, and beast
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         // Get new timestamp calculated status
@@ -129,9 +165,21 @@ mod tests {
         cheat_caller_address(PLAYER());
         cheat_block_timestamp(7000000);
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 100,
+            energy: 100,
+            happiness: 100,
+            hygiene: 100,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
         player_system.set_current_beast(1);
 
         // Get status after decrease
@@ -162,9 +210,21 @@ mod tests {
         cheat_caller_address(PLAYER());
         cheat_block_timestamp(7000000);
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 100,
+            energy: 100,
+            happiness: 100,
+            hygiene: 100,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
         player_system.set_current_beast(1);
 
         // Get status after decrease
@@ -196,9 +256,21 @@ mod tests {
         cheat_caller_address(PLAYER());
         cheat_block_timestamp(7000000);
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 100,
+            energy: 100,
+            happiness: 100,
+            hygiene: 100,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
         player_system.set_current_beast(1);
 
         // -----------------------------------------------
@@ -245,9 +317,21 @@ mod tests {
         cheat_caller_address(PLAYER());
         cheat_block_timestamp(7000000);
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 100,
+            energy: 100,
+            happiness: 100,
+            hygiene: 100,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
         player_system.set_current_beast(1);
 
         // Get final status
@@ -270,9 +354,21 @@ mod tests {
         cheat_caller_address(PLAYER());
         cheat_block_timestamp(7000000);
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 100,
+            energy: 100,
+            happiness: 100,
+            hygiene: 100,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
         player_system.set_current_beast(1);
 
         // Get status when dead
