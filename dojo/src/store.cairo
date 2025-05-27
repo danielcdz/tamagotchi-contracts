@@ -245,7 +245,7 @@ pub impl StoreImpl of StoreTrait {
         self.world.write_model(@potatoes);
     }
 
-    fn init_player_food(mut self: Store, beast_id: u16) {
+    fn init_player_food_random_values(mut self: Store, beast_id: u16) {
         // Read the beast instance
         let beast = self.read_beast(beast_id);
     
@@ -254,6 +254,18 @@ pub impl StoreImpl of StoreTrait {
 
         // Get a random common food for this beast
         let common_food_id = beast.get_random_common_food(beast_id);
+    
+        // Create both foods for the player with the initial amount
+        self.new_food(favorite_food_id, constants::MAX_FOOD_AMOUNT);
+        self.new_food(common_food_id, constants::MAX_FOOD_AMOUNT);
+    }
+
+    fn init_player_food_custom_values(mut self: Store, beast_id: u16) {
+        // Set a hardcoded food for this beast - tests purposes
+        let favorite_food_id = 14;
+
+        // GSet a hardcoded food for this beast - tests purposes
+        let common_food_id = 15;
     
         // Create both foods for the player with the initial amount
         self.new_food(favorite_food_id, constants::MAX_FOOD_AMOUNT);

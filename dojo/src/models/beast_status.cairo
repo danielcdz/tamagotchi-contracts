@@ -1,3 +1,6 @@
+// Starknet import
+use starknet::get_block_timestamp;
+
 // Types imports
 use tamagotchi::types::clean_status::CleanStatus;
 use tamagotchi::types::beast_status_custom::BeastStatusCustom;
@@ -7,6 +10,7 @@ use tamagotchi::constants;
 
 // Helpers import
 use tamagotchi::helpers::pseudo_random::PseudoRandom;
+use tamagotchi::helpers::random::{Random, RandomVRF};
 
 // Model
 #[derive(Drop, Serde, IntrospectPacked, Debug)]
@@ -28,14 +32,16 @@ pub struct BeastStatus {
 #[generate_trait]
 pub impl BeastStatusImpl of BeastStatusTrait {
     fn new_beast_status_random_values(beast_id: u16, current_timestamp: u64) -> BeastStatus {
+        let mut random: Random = RandomVRF::new_vrf();
+        
         BeastStatus {
             beast_id: beast_id,
             is_alive: true,
             is_awake: true,
-            hunger: PseudoRandom::generate_random_u8(beast_id, 1, constants::MIN_INITIAL_STATUS, constants::MAX_INITIAL_STATUS),
-            energy: PseudoRandom::generate_random_u8(beast_id, 2, constants::MIN_INITIAL_STATUS, constants::MAX_INITIAL_STATUS),
-            happiness: PseudoRandom::generate_random_u8(beast_id, 3, constants::MIN_INITIAL_STATUS, constants::MAX_INITIAL_STATUS),
-            hygiene: PseudoRandom::generate_random_u8(beast_id, 4, constants::MIN_INITIAL_STATUS, constants::MAX_INITIAL_STATUS),
+            hunger: random.get_random_u8(constants::MAX_INITIAL_STATUS),
+            energy: random.get_random_u8(constants::MAX_INITIAL_STATUS),
+            happiness: random.get_random_u8(constants::MAX_INITIAL_STATUS),
+            hygiene: random.get_random_u8(constants::MAX_INITIAL_STATUS),
             clean_status: CleanStatus::Clean.into(),
             last_timestamp: current_timestamp,
         }
@@ -51,7 +57,7 @@ pub impl BeastStatusImpl of BeastStatusTrait {
             happiness: beast_status_custom.happiness,
             hygiene: beast_status_custom.hygiene,
             clean_status: beast_status_custom.clean_status.into(),
-            last_timestamp: beast_status_custom.last_timestamp,
+            last_timestamp: get_block_timestamp(),
         }
     }
 

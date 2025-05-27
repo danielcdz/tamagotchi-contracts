@@ -17,6 +17,10 @@ mod tests {
         },
     };
 
+    // Types import
+    use tamagotchi::types::beast_status_custom::{BeastStatusCustom};
+    use tamagotchi::types::clean_status::{CleanStatus};
+
     #[test]
     #[available_gas(60000000)]
     fn test_add_initial_food() {
@@ -27,9 +31,21 @@ mod tests {
 
         cheat_caller_address(PLAYER());
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 100,
+            energy: 100,
+            happiness: 100,
+            hygiene: 100,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Initialize player
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
         player_system.set_current_beast(1);
 
         let mut food_count = 0;
@@ -60,9 +76,21 @@ mod tests {
         cheat_caller_address(PLAYER());
         cheat_block_timestamp(7000000);
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 100,
+            energy: 100,
+            happiness: 100,
+            hygiene: 100,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Create player, food, and beast
         player_system.spawn_player();
-        game_system.spawn_beast(1, 3); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 3, custom_beast_status); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         // Get initial status
@@ -98,31 +126,39 @@ mod tests {
         cheat_caller_address(PLAYER());
         cheat_block_timestamp(7000000);
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 55,
+            energy: 43,
+            happiness: 23,
+            hygiene: 67,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Create player, food, and beast
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
-        // We decrease the status to verify that they increase after feeding
-        cheat_block_timestamp(7000500);
-
         // Get initial status
-        let initial_status: BeastStatus = game_system.get_timestamp_based_status();
-        let initial_hunger = initial_status.hunger;
-        let initial_energy = initial_status.energy;
+        let initial_hunger = custom_beast_status.hunger;
+        let initial_energy = custom_beast_status.energy;
 
         println!(
-            "Initial Status - Energy: {}, Hunger: {}", initial_status.energy, initial_status.hunger,
+             "Initial Status - Energy: {}, Hunger: {}", custom_beast_status.energy, custom_beast_status.hunger,
         );
 
         // Increase status
-        game_system.feed(3);
+        game_system.feed(14);
 
         // Get updated status
         let updated_status: BeastStatus = game_system.get_timestamp_based_status();
 
         println!(
-            "Updated Status - Energy: {}, Hunger: {}", initial_status.energy, initial_status.hunger,
+            "Updated Status - Energy: {}, Hunger: {}", custom_beast_status.energy, custom_beast_status.hunger,
         );
 
         // Verify hunger and energy decreased
@@ -140,9 +176,21 @@ mod tests {
 
         cheat_caller_address(PLAYER());
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 100,
+            energy: 100,
+            happiness: 100,
+            hygiene: 100,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Initialize player and add initial food
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         let test_food_id: u8 = 5; // CakeChocolate
@@ -179,6 +227,18 @@ mod tests {
 
         cheat_caller_address(PLAYER());
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 100,
+            energy: 100,
+            happiness: 100,
+            hygiene: 100,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Initialize player
         player_system.spawn_player();
 
@@ -196,7 +256,7 @@ mod tests {
         assert(initial_food_count == 0, 'Food exists before beast');
 
         // Create beast (which should trigger food initialization internally)
-        game_system.spawn_beast(1, 1); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         // Verify that food was created after beast creation
@@ -225,9 +285,21 @@ mod tests {
 
         cheat_caller_address(PLAYER());
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 43,
+            energy: 55,
+            happiness: 67,
+            hygiene: 45,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Initialize player and add initial food
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         let test_food_id: u8 = 1; // Apple
@@ -283,9 +355,21 @@ mod tests {
 
         cheat_caller_address(PLAYER());
 
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 66,
+            energy: 89,
+            happiness: 87,
+            hygiene: 90,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
         // Initialize player
         player_system.spawn_player();
-        game_system.spawn_beast(1, 1); // Spawn beast with specie 1 (Light)
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1 (Light)
         player_system.set_current_beast(1);
 
         // Create different food types
