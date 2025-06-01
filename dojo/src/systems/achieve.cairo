@@ -202,27 +202,27 @@ pub mod achieve {
             let mut player: Player = store.read_player();
             player.assert_exists();
 
-            if score >= constants::TANGOI_POINTS && score <= constants::JUMPERII_POINTS {
+            if score >= constants::TANGOI_POINTS && score <= constants::TANGOII_POINTS {
                 // TangoI
                 let task_id: felt252 = 'TangoI';
                 achievement_store.progress(player.address.into(), task_id, 1, get_block_timestamp());
             }
-            if score >= constants::TANGOI_POINTS && score <= constants::JUMPERIII_POINTS {
+            if score >= constants::TANGOII_POINTS && score <= constants::TANGOIII_POINTS {
                 // TangoII
                 let task_id: felt252 = 'TangoII';
                 achievement_store.progress(player.address.into(), task_id, 1, get_block_timestamp());
             }
-            if score >= constants::TANGOI_POINTS && score <= constants::JUMPERIV_POINTS {
+            if score >= constants::TANGOIII_POINTS && score <= constants::TANGOIV_POINTS {
                 // TangoIII
                 let task_id: felt252 = 'TangoIII';
                 achievement_store.progress(player.address.into(), task_id, 1, get_block_timestamp());
             }
-            if score >= constants::TANGOI_POINTS && score <= constants::JUMPERV_POINTS{
+            if score >= constants::TANGOIV_POINTS && score <= constants::TANGOV_POINTS{
                 // TangoIV
                 let task_id: felt252 = 'TangoIV';
                 achievement_store.progress(player.address.into(), task_id, 1, get_block_timestamp());
             }
-            if score >= constants::TANGOI_POINTS {
+            if score >= constants::TANGOV_POINTS {
                 // TangoV
                 let task_id: felt252 = 'TangoV';
                 achievement_store.progress(player.address.into(), task_id, 1, get_block_timestamp());
