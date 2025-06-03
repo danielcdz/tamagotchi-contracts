@@ -11,8 +11,8 @@ use starknet::ContractAddress;
 #[starknet::interface]
 pub trait IGame<T> {
     // ------------------------- Beast methods -------------------------
-    fn spawn_beast(ref self: T, specie: u8, beast_type: u8);
-    fn spawn_beast_custom_status(ref self: T, specie: u8, beast_type: u8, beast_status: BeastStatusCustom);
+    fn spawn_beast(ref self: T, specie: u8, beast_type: u8, name: felt252);
+    fn spawn_beast_custom_status(ref self: T, specie: u8, beast_type: u8, beast_status: BeastStatusCustom, name: felt252);
     fn update_beast(ref self: T);
     fn feed(ref self: T, food_id: u8);
     fn sleep(ref self: T);
@@ -76,14 +76,14 @@ pub mod game {
     #[abi(embed_v0)]
     impl GameImpl of IGame<ContractState> {
         // ------------------------- Beast methods -------------------------
-        fn spawn_beast(ref self: ContractState, specie: u8, beast_type: u8) {
+        fn spawn_beast(ref self: ContractState, specie: u8, beast_type: u8, name: felt252) {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
             
             let current_beast_id = self.beast_counter.read();
 
             store.new_beast_status_random_values(current_beast_id);
-            store.new_beast(current_beast_id, specie, beast_type);
+            store.new_beast(current_beast_id, specie, beast_type, name);
 
             store.init_player_food_random_values(current_beast_id);
 
@@ -91,12 +91,12 @@ pub mod game {
         }
 
         // Use only for testing purposes
-        fn spawn_beast_custom_status(ref self: ContractState, specie: u8, beast_type: u8, beast_status: BeastStatusCustom) {
+        fn spawn_beast_custom_status(ref self: ContractState, specie: u8, beast_type: u8, beast_status: BeastStatusCustom, name: felt252) {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
             
             store.new_beast_status_custom_values(beast_status);
-            store.new_beast(beast_status.beast_id, specie, beast_type);
+            store.new_beast(beast_status.beast_id, specie, beast_type, name);
 
             store.init_player_food_custom_values(beast_status.beast_id);
         }

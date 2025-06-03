@@ -288,7 +288,7 @@ pub impl StoreImpl of StoreTrait {
         self.world.write_model(@beast_status);
     }
 
-    fn new_beast(mut self: Store, beast_id: u16, specie: u8, beast_type: u8) {
+    fn new_beast(mut self: Store, beast_id: u16, specie: u8, beast_type: u8, name: felt252) {
         let player = get_caller_address();
         let current_timestamp = get_block_timestamp();
 
@@ -299,6 +299,7 @@ pub impl StoreImpl of StoreTrait {
             birth_date: current_timestamp,
             specie: specie,
             beast_type: beast_type,
+            name: name
         };
 
         self.world.write_model(@new_beast);

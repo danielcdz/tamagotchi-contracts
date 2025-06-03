@@ -45,7 +45,7 @@ mod tests {
 
         // Initialize player
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
         player_system.set_current_beast(1);
 
         let mut food_count = 0;
@@ -90,7 +90,7 @@ mod tests {
 
         // Create player, food, and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 3, custom_beast_status); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 3, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         // Get initial status
@@ -140,7 +140,7 @@ mod tests {
 
         // Create player, food, and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         // Get initial status
@@ -190,7 +190,7 @@ mod tests {
 
         // Initialize player and add initial food
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         let test_food_id: u8 = 5; // CakeChocolate
@@ -256,7 +256,7 @@ mod tests {
         assert(initial_food_count == 0, 'Food exists before beast');
 
         // Create beast (which should trigger food initialization internally)
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         // Verify that food was created after beast creation
@@ -299,7 +299,7 @@ mod tests {
 
         // Initialize player and add initial food
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
         player_system.set_current_beast(1);
 
         let test_food_id: u8 = 1; // Apple
@@ -369,7 +369,7 @@ mod tests {
 
         // Initialize player
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1 (Light)
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1 (Light)
         player_system.set_current_beast(1);
 
         // Create different food types

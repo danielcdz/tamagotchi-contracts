@@ -22,7 +22,8 @@ pub struct Beast {
     pub age: u16,
     pub birth_date: u64,
     pub specie: u8,
-    pub beast_type: u8
+    pub beast_type: u8,
+    pub name: felt252, // max 32 characters
 }
 
 // Traits implementation
@@ -150,6 +151,7 @@ mod tests {
             age: 1,
             specie: 1,
             beast_type: 1,
+            name: 'test-beast'
         };
 
         assert_eq!(beast.player, player_address, "Player address should match");
@@ -169,6 +171,7 @@ mod tests {
             birth_date: 5000,
             specie: 1,
             beast_type: 1,
+            name: 'test-beast'
         };
 
         assert_eq!(beast.beast_id, 1, "Beast ID should be 1");
@@ -188,6 +191,7 @@ mod tests {
             birth_date: 5000,
             specie: 1,
             beast_type: 1, // Light
+            name: 'test-beast'
         };
         
         // Beast Magic (beast_type = 2)
@@ -198,6 +202,7 @@ mod tests {
             birth_date: 5000,
             specie: 1,
             beast_type: 2, // Magic
+            name: 'test-beast'
         };
         
         // Beast Shadow (beast_type = 3)
@@ -208,6 +213,7 @@ mod tests {
             birth_date: 5000,
             specie: 1,
             beast_type: 3, // Shadow
+            name: 'test-beast'
         };
         
         // Light beast - should be one of: Cherry (3), Fish (10), Corn (15)
@@ -240,6 +246,7 @@ mod tests {
             birth_date: 5000,
             specie: 1,
             beast_type: 1, // Light
+            name: 'test-beast'
         };
         
         // Get common food
@@ -268,6 +275,7 @@ mod tests {
             birth_date: 5000,
             specie: 1,
             beast_type: 1, 
+            name: 'test-beast'
         };
         
         let beast2 = Beast {
@@ -277,6 +285,7 @@ mod tests {
             birth_date: 5000,
             specie: 1,
             beast_type: 1, 
+            name: 'test-beast'
         };
         
         // The beast_id are different, so they should get different foods

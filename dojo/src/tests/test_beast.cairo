@@ -40,7 +40,7 @@ mod tests {
         };
 
         // Spawn beast with specie 1
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
         player_system.set_current_beast(1);
 
         // Get beast data
@@ -76,7 +76,7 @@ mod tests {
         cheat_block_timestamp(7000000);
 
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
         player_system.set_current_beast(1);
 
         // Get beast age before 24 hours
@@ -146,9 +146,9 @@ mod tests {
         };
 
         // Spawn multiple beasts
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status_1); // First beast, specie 1
-        game_system.spawn_beast_custom_status(2 , 2, custom_beast_status_2); // Second beast, specie 2
-        game_system.spawn_beast_custom_status(3, 3, custom_beast_status_3); // Third beast, specie 3
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status_1, 'test-beast'); // First beast, specie 1
+        game_system.spawn_beast_custom_status(2 , 2, custom_beast_status_2, 'test-beast'); // Second beast, specie 2
+        game_system.spawn_beast_custom_status(3, 3, custom_beast_status_3, 'test-beast'); // Third beast, specie 3
 
         // Read and verify each beast
         let beast1: Beast = world.read_model((PLAYER(), 1));

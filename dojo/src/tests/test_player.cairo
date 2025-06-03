@@ -64,7 +64,7 @@ mod tests {
         };
         
         // Spawn a beast first
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
 
         // Set current beast
         let beast_id: u16 = 1;
@@ -112,8 +112,8 @@ mod tests {
         };
         
         // Spawn multiple beasts
-        game_system.spawn_beast_custom_status(1 ,2, custom_beast_status_1); // First beast
-        game_system.spawn_beast_custom_status(2, 3, custom_beast_status_2); // Second beast
+        game_system.spawn_beast_custom_status(1 ,2, custom_beast_status_1, 'test-beast'); // First beast
+        game_system.spawn_beast_custom_status(2, 3, custom_beast_status_2, 'test-beast'); // Second beast
         
         // Set and verify we can switch between beasts
         player_system.set_current_beast(1);
