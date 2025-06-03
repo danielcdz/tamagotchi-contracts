@@ -6,6 +6,8 @@ pub trait IPlayer<T> {
     fn set_current_beast(ref self: T, beast_id: u16);
     fn update_player_daily_streak(ref self: T);
     fn update_player_total_points(ref self: T, points: u32);
+    fn update_player_total_coins(ref self: T, coins: u32);
+    fn update_player_total_gems(ref self: T, gems: u32);
     fn update_player_minigame_highest_score(ref self: T, points: u32, minigame_id: u16);
     fn add_or_update_food_amount(ref self: T, food_id: u8, amount: u8);
     fn emit_player_push_token(ref self: T, token: ByteArray);
@@ -84,7 +86,31 @@ pub mod player {
             let mut player: Player = store.read_player();
             player.assert_exists();
 
-            player.update_total_points(points);
+            player.increase_total_points(points);
+
+            store.write_player(@player);
+        }
+
+        fn update_player_total_coins(ref self: ContractState, coins: u32) {
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+
+            player.increase_total_coins(coins);
+
+            store.write_player(@player);
+        }
+
+        fn update_player_total_gems(ref self: ContractState, gems: u32) {
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+
+            player.increase_total_gems(gems);
 
             store.write_player(@player);
         }

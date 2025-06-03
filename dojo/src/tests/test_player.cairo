@@ -166,6 +166,46 @@ mod tests {
     }
 
     #[test]
+    #[available_gas(40000000)]
+    fn test_update_player_total_coins() {
+        let world = create_test_world();
+        let player_system = create_player_system(world);
+
+        cheat_caller_address(PLAYER());
+
+        // Initialize player
+        player_system.spawn_player();
+
+        // Update player total points
+        let coins: u32 = 1000;
+        player_system.update_player_total_coins(coins);
+
+        // Verify player total points
+        let player: Player = world.read_model(PLAYER());
+        assert(player.total_coins == coins, 'wrong total coins');
+    }
+
+            #[test]
+    #[available_gas(40000000)]
+    fn test_update_player_total_gems() {
+        let world = create_test_world();
+        let player_system = create_player_system(world);
+
+        cheat_caller_address(PLAYER());
+
+        // Initialize player
+        player_system.spawn_player();
+
+        // Update player total points
+        let gems: u32 = 1000;
+        player_system.update_player_total_gems(gems);
+
+        // Verify player total points
+        let player: Player = world.read_model(PLAYER());
+        assert(player.total_gems == gems, 'wrong total gems');
+    }
+
+    #[test]
     #[available_gas(100000000)]
     fn test_player_emit_push_token_event() {
         let world = create_test_world();

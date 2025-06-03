@@ -17,6 +17,8 @@ pub struct Player {
     pub current_beast_id: u16,
     pub daily_streak: u16,
     pub total_points: u32,
+    pub total_coins: u32,
+    pub total_gems: u32,
     pub last_active_day: u32,
     pub creation_day: u32
 }
@@ -40,8 +42,16 @@ pub impl PlayerImpl of PlayerTrait {
         self.last_active_day = current_day;
     }
 
-    fn update_total_points(ref self: Player, points: u32) {
+    fn increase_total_points(ref self: Player, points: u32) {
         self.total_points += points;
+    }
+
+    fn increase_total_coins(ref self: Player, coins: u32) {
+        self.total_coins += coins;
+    }
+
+    fn increase_total_gems(ref self: Player, gems: u32) {
+        self.total_gems += gems;
     }
 
 }
@@ -66,6 +76,8 @@ pub impl ZeroablePlayerTrait of Zero<Player> {
             address: constants::ZERO_ADDRESS(),
             current_beast_id: 0,
             total_points: 0,
+            total_coins: 0,
+            total_gems: 0,
             daily_streak: 0,
             last_active_day: 0,
             creation_day: 1,
@@ -101,6 +113,8 @@ mod tests {
             address: mock_address,
             current_beast_id: initial_beast_id,
             total_points: 0,
+            total_coins: 0,
+            total_gems: 0,
             daily_streak: 0,
             last_active_day: 0,
             creation_day: 1,
@@ -155,6 +169,8 @@ mod tests {
             current_beast_id: 0,
             total_points: 0,
             daily_streak: 0,
+            total_coins: 0,
+            total_gems: 0,
             last_active_day: 0,
             creation_day: 1,
         };
@@ -176,6 +192,8 @@ mod tests {
             address: address1,
             current_beast_id: 1,
             total_points: 0,
+            total_coins: 0,
+            total_gems: 0,
             daily_streak: 0,
             last_active_day: 0,
             creation_day: 1,
@@ -185,6 +203,8 @@ mod tests {
             address: address2,
             current_beast_id: 2,
             total_points: 0,
+            total_coins: 0,
+            total_gems: 0,
             daily_streak: 0,
             last_active_day: 0,
             creation_day: 1,
