@@ -95,7 +95,7 @@ mod tests {
         game_system.sleep();
 
         // Get status while sleeping
-        let sleeping_status: BeastStatus = world.read_model(1);
+        let sleeping_status: BeastStatus = world.read_model((PLAYER(),1));
         println!("Status While Sleeping - Energy: {}, Is Awake: {}, Is Alive: {}", 
             sleeping_status.energy, sleeping_status.is_awake, sleeping_status.is_alive);
 
@@ -103,7 +103,7 @@ mod tests {
         game_system.awake();
 
         // Get final status
-        let awake_status: BeastStatus = world.read_model(1);
+        let awake_status: BeastStatus = world.read_model((PLAYER(),1));
         println!("Status After Waking - Energy: {}, Is Awake: {}, Is Alive: {}", 
             awake_status.energy, awake_status.is_awake, awake_status.is_alive);
 
@@ -146,7 +146,7 @@ mod tests {
         game_system.play();
 
         // Get final status
-        let final_status: BeastStatus = world.read_model(1);
+        let final_status: BeastStatus = world.read_model((PLAYER(),1));
         println!("Status After Playing - Happiness: {}, Energy: {}, Hunger: {}, Is Alive: {}", 
             final_status.happiness, final_status.energy, final_status.hunger, final_status.is_alive);
 
@@ -192,7 +192,7 @@ mod tests {
         game_system.pet();
 
         // Get final status
-        let final_status: BeastStatus = world.read_model(1);
+        let final_status: BeastStatus = world.read_model((PLAYER(),1));
         println!("Status After Playing - Happiness: {}, Energy: {}", 
             final_status.happiness, final_status.energy);
 
@@ -237,7 +237,7 @@ mod tests {
         game_system.clean();
 
         // Get final status
-        let final_status: BeastStatus = world.read_model(1);
+        let final_status: BeastStatus = world.read_model((PLAYER(),1));
         println!("Status After Cleaning - Hygiene: {}, Happiness: {}, Is Alive: {}", 
             final_status.hygiene, final_status.happiness, final_status.is_alive);
 
@@ -388,7 +388,7 @@ mod tests {
         game_system.revive();
 
         // Get final status
-        let revived_status: BeastStatus = world.read_model(1);
+        let revived_status: BeastStatus = world.read_model((PLAYER(),1));
         println!("Revived Status - Energy: {}, Hunger: {}, Happiness: {}, Hygiene: {}, Is Alive: {}", 
             revived_status.energy, revived_status.hunger, revived_status.happiness, 
             revived_status.hygiene, revived_status.is_alive);
