@@ -21,6 +21,7 @@ pub trait IGame<T> {
     fn pet(ref self: T);
     fn clean(ref self: T);
     fn revive(ref self: T);
+    fn evolve(); // this method returns if the beast is available for evolution
 
     // ------------------------- Read Calls -------------------------
     fn get_timestamp_based_status(ref self: T) -> BeastStatus;

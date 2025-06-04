@@ -23,7 +23,7 @@ pub struct Beast {
     pub birth_date: u64,
     pub specie: u8,
     pub beast_type: u8,
-    pub name: felt252, // max 32 characters
+    pub name: felt252, // max 32 characters change name costs gemas
 }
 
 // Traits implementation
