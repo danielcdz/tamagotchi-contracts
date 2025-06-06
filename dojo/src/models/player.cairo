@@ -54,6 +54,13 @@ pub impl PlayerImpl of PlayerTrait {
         self.total_gems += gems;
     }
 
+    fn gems_balance(ref self: Player) -> u32 {
+        return self.total_gems;
+    }
+
+    fn coins_balance(ref self: Player) -> u32 {
+        return self.total_coins;
+    }
 }
 
 #[generate_trait]

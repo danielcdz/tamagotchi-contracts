@@ -130,6 +130,10 @@ pub impl BeastImpl of BeastTrait {
             (constants::S_UPDATE_POINTS, constants::S_UPDATE_POINTS, constants::XS_UPDATE_POINTS)
         }
     }
+
+    fn set_name(ref self: Beast, name: felt252) {
+        self.name = name;
+    }
 }
 
 // Tests

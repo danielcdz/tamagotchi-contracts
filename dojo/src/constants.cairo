@@ -98,3 +98,11 @@ pub const SECONDS_IN_3_MINUTES: u64 = 180;
 
 // Sleeping mechanics
 pub const TOTAL_RECOVER_TIME: u64 = 18000; // Based on 1 point every 3 minutes increase rate | 5 hours to fully recover
+
+// Init player coins and gems
+pub const INITIAL_COINTS: u64 = 10000;
+pub const INITIAL_GEMS: u64 = 10000;
+
+// Minimun balance for change name
+pub const CHANGE_NAME_FEE: u32 = 5;
+

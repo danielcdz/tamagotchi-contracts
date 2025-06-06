@@ -21,7 +21,7 @@ pub trait IGame<T> {
     fn pet(ref self: T);
     fn clean(ref self: T);
     fn revive(ref self: T);
-    fn evolve(); // this method returns if the beast is available for evolution
+    fn set_beast_name(ref self: T, name: felt252) -> bool;
 
     // ------------------------- Read Calls -------------------------
     fn get_timestamp_based_status(ref self: T) -> BeastStatus;
@@ -302,6 +302,22 @@ pub mod game {
 
                 store.write_beast_status(@beast_status);
             }
+        }
+
+        fn set_name(ref self: ContractState, name: felt252) -> bool {
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+            
+            let player: Player = store.read_player();
+            player.assert_exists();
+            
+            if player.gems_balance() >= constants::CHANGE_NAME_FEE {
+                let beast: Beast = store.read_beast(player.current_beast_id);
+                beast.set_name(name);
+                return true;
+            }
+            
+            return false;
         }
 
         // ------------------------- Read Calls -------------------------
