@@ -60,7 +60,8 @@ pub impl StoreImpl of StoreTrait {
     }
 
     fn read_beast_status(self: Store, beast_id: u16) -> BeastStatus {
-        self.world.read_model(beast_id)
+        let player_address = get_caller_address();
+        self.world.read_model((player_address, beast_id))
     }
 
     fn read_highest_score(self: Store, minigame_id: u16) -> HighestScore {
@@ -275,15 +276,17 @@ pub impl StoreImpl of StoreTrait {
     }
 
     fn new_beast_status_random_values(mut self: Store, beast_id: u16) {
+        let player = get_caller_address();
         let current_timestamp = get_block_timestamp();
 
-        let mut beast_status = BeastStatusTrait::new_beast_status_random_values(beast_id, current_timestamp);
+        let mut beast_status = BeastStatusTrait::new_beast_status_random_values(beast_id, current_timestamp, player);
 
         self.world.write_model(@beast_status);
     }
 
     fn new_beast_status_custom_values(mut self: Store, beast_status_custom: BeastStatusCustom) {
-        let mut beast_status = BeastStatusTrait::new_beast_status_custom_values(beast_status_custom);
+        let player = get_caller_address();
+        let mut beast_status = BeastStatusTrait::new_beast_status_custom_values(beast_status_custom, player);
 
         self.world.write_model(@beast_status);
     }

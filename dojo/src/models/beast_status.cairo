@@ -1,5 +1,5 @@
 // Starknet import
-use starknet::get_block_timestamp;
+use starknet::{get_block_timestamp, ContractAddress};
 
 // Types imports
 use tamagotchi::types::clean_status::CleanStatus;
@@ -17,6 +17,8 @@ use tamagotchi::helpers::random::{Random, RandomVRF};
 #[dojo::model]
 pub struct BeastStatus {
     #[key]
+    pub player: ContractAddress, 
+    #[key]
     pub beast_id: u16,
     pub is_alive: bool,
     pub is_awake: bool,
@@ -31,10 +33,11 @@ pub struct BeastStatus {
 // Traits implementations
 #[generate_trait]
 pub impl BeastStatusImpl of BeastStatusTrait {
-    fn new_beast_status_random_values(beast_id: u16, current_timestamp: u64) -> BeastStatus {
+    fn new_beast_status_random_values(beast_id: u16, current_timestamp: u64, player: ContractAddress) -> BeastStatus {
         let mut random: Random = RandomVRF::new_vrf();
         
         BeastStatus {
+            player: player,
             beast_id: beast_id,
             is_alive: true,
             is_awake: true,
@@ -47,8 +50,9 @@ pub impl BeastStatusImpl of BeastStatusTrait {
         }
     }
 
-    fn new_beast_status_custom_values(beast_status_custom: BeastStatusCustom) -> BeastStatus {
+    fn new_beast_status_custom_values(beast_status_custom: BeastStatusCustom, player: ContractAddress) -> BeastStatus {
         BeastStatus {
+            player: player,
             beast_id: beast_status_custom.beast_id,
             is_alive: beast_status_custom.is_alive,
             is_awake: beast_status_custom.is_awake,
@@ -307,11 +311,13 @@ pub impl BeastStatusImpl of BeastStatusTrait {
 mod tests {
     use super::BeastStatus;
     use tamagotchi::types::clean_status::{CleanStatus};
+    use starknet::contract_address_const;
 
     #[test]
     #[available_gas(300000)]
     fn test_beast_status_initialization() {
         let beast_status = BeastStatus {
+            player: contract_address_const::<0x123>(),
             beast_id: 1,
             is_alive: true,
             is_awake: true,
@@ -337,6 +343,7 @@ mod tests {
     #[available_gas(300000)]
     fn test_beast_status_boundaries() {
         let max_status_beast = BeastStatus {
+            player: contract_address_const::<0x123>(),
             beast_id: 4,
             is_alive: true,
             is_awake: true,
@@ -359,6 +366,7 @@ mod tests {
     #[available_gas(300000)]
     fn test_beast_unique_ids() {
         let beast1 = BeastStatus {
+            player: contract_address_const::<0x123>(),
             beast_id: 1,
             is_alive: true,
             is_awake: true,
@@ -371,6 +379,7 @@ mod tests {
         };
 
         let beast2 = BeastStatus {
+            player: contract_address_const::<0x123>(),
             beast_id: 2,
             is_alive: true,
             is_awake: true,
@@ -392,6 +401,7 @@ mod tests {
     #[available_gas(300000)]
     fn test_deceased_beast_state() {
         let deceased_beast = BeastStatus {
+            player: contract_address_const::<0x123>(),
             beast_id: 5,
             is_alive: false,
             is_awake: false,
@@ -413,6 +423,7 @@ mod tests {
     #[available_gas(300000)]
     fn test_prevent_negative_status() {
         let low_status_beast = BeastStatus {
+            player: contract_address_const::<0x123>(),
             beast_id: 6,
             is_alive: true,
             is_awake: true,
@@ -439,6 +450,7 @@ mod tests {
     #[available_gas(300000)]
     fn test_status_lower_bound() {
         let zero_status_beast = BeastStatus {
+            player: contract_address_const::<0x123>(),
             beast_id: 7,
             is_alive: true,
             is_awake: true,
