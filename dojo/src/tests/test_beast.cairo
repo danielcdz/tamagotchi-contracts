@@ -41,7 +41,6 @@ mod tests {
 
         // Spawn beast with specie 1
         game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
-        player_system.set_current_beast(1);
 
         // Get beast data
         let beast: Beast = world.read_model((PLAYER(), 1));
@@ -77,7 +76,6 @@ mod tests {
 
         player_system.spawn_player();
         game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
-        player_system.set_current_beast(1);
 
         // Get beast age before 24 hours
         game_system.update_beast();

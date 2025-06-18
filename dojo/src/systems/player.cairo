@@ -3,7 +3,6 @@
 pub trait IPlayer<T> {
     // ------------------------- Player methods -------------------------
     fn spawn_player(ref self: T);
-    fn set_current_beast(ref self: T, beast_id: u16);
     fn update_player_daily_streak(ref self: T);
     fn update_player_total_points(ref self: T, points: u32);
     fn update_player_minigame_highest_score(ref self: T, points: u32, minigame_id: u16);
@@ -50,17 +49,6 @@ pub mod player {
             let store = StoreTrait::new(world);
 
             store.new_player();
-        }
-
-        fn set_current_beast(ref self: ContractState, beast_id: u16) {
-            let mut world = self.world(@"tamagotchi");
-            let store = StoreTrait::new(world);
-
-            let mut player: Player = store.read_player();
-            player.assert_exists();
-            player.current_beast_id = beast_id;
-
-            store.write_player(@player);
         }
 
         fn update_player_daily_streak(ref self: ContractState) {
