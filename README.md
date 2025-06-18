@@ -53,30 +53,90 @@ torii --world <WA> --http.cors_origins "*"
 
 ---
 
-# 🚀 Deploying to Sepolia  
+# 🚀 Deploying to Sepolia
 
-### 1️⃣ Set Up Environment Variables  
+## 1️⃣ Set Up Environment Variables
 
-Set environment variables for Sepolia deployment:  
-   ```bash
-      export STARKNET_RPC_URL="https://api.cartridge.gg/x/starknet/sepolia"
-      export DEPLOYER_ACCOUNT_ADDRESS="<your_deployer_account_address_here>"
-      export DEPLOYER_PRIVATE_KEY="<your_deployer_private_key_here>"
-   ```
+Before deploying, set your Sepolia environment variables:
 
-> ⚠️ **Important:** Ensure this account is **funded** before deploying.  
+```bash
+export STARKNET_RPC_URL="https://api.cartridge.gg/x/starknet/sepolia"
+export DEPLOYER_ACCOUNT_ADDRESS="<your_deployer_account_address_here>"
+export DEPLOYER_PRIVATE_KEY="<your_deployer_private_key_here>"
+```
 
-### 2️⃣ Update seed
+> ⚠️ **Make sure your deployer account is funded before proceeding.**
 
-Go to the file `dojo_sepolia.toml` and update the seed by incrementing the last number here: `seed = "tamagotchi1"`
+---
 
-### 3️⃣ Deploy to Sepolia using command
+## 2️⃣ Update the Seed (Optional)
 
-Run the following command to deploy your world on Sepolia:  
+To deploy a new world instance, edit the `dojo_sepolia.toml` file and increment the seed value:
+
+```toml
+seed = "tamagotchi1"  # Change to "tamagotchi2", "tamagotchi3", etc. for a new world
+```
+
+If you want to continue using the same world, leave the seed as-is.
+
+---
+
+## 3️⃣ Deploy to Sepolia
+
+Run the following command to deploy:
 
 ```bash
 scarb run sepolia
 ```
-Once the deployment is complete, it will return the **world address**, which you will use to interact with the deployed game.  
 
+Once the deployment finishes, you'll receive a **world address** — save this, as it will be required for interactions and indexing.
+
+---
+
+# 🔗 Integration
+
+## 4️⃣ Generate TypeScript Bindings
+
+Run:
+
+```bash
+sozo build --typescript
+```
+
+---
+
+## 5️⃣ Configure Torii Indexer
+
+1. **Install Slot**
+   If you haven't already, install Slot:
+   👉 [https://dojoengine.org/toolchain/slot](https://dojoengine.org/toolchain/slot)
+
+2. **Authenticate with Slot**
+
+   ```bash
+   slot auth login
+   ```
+
+3. **Create a New Torii Instance**
+
+   ```bash
+   slot d create <name> torii \
+     --sql.historical "tamagotchi-TrophyProgression" \
+     --config "./torii-config.toml" \
+     --version v1.5.1
+   ```
+
+   ✅ Verify the deployment:
+
+   ```bash
+   slot d describe <name> torii
+   ```
+
+4. **Or Update an Existing Torii Instance**
+
+   Point your existing indexer to the new world address:
+
+   ```bash
+   slot d update <name> torii --config "./torii-config.toml"
+   ```
 
