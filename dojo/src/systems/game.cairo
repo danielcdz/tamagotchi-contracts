@@ -312,7 +312,7 @@ pub mod game {
             player.assert_exists();
             
             if player.gems_balance() >= constants::CHANGE_NAME_FEE {
-                let beast: Beast = store.read_beast(player.current_beast_id);
+                let mut beast: Beast = store.read_beast(player.current_beast_id);
                 beast.set_name(name);
                 return true;
             }

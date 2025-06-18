@@ -10,7 +10,6 @@ use tamagotchi::constants;
 
 // Helpers import
 use tamagotchi::helpers::pseudo_random::PseudoRandom;
-use tamagotchi::helpers::random::{Random, RandomVRF};
 
 // Model
 #[derive(Drop, Serde, IntrospectPacked, Debug)]
@@ -34,17 +33,15 @@ pub struct BeastStatus {
 #[generate_trait]
 pub impl BeastStatusImpl of BeastStatusTrait {
     fn new_beast_status_random_values(beast_id: u16, current_timestamp: u64, player: ContractAddress) -> BeastStatus {
-        let mut random: Random = RandomVRF::new_vrf();
-        
         BeastStatus {
             player: player,
             beast_id: beast_id,
             is_alive: true,
             is_awake: true,
-            hunger: random.get_random_u8(constants::MAX_INITIAL_STATUS),
-            energy: random.get_random_u8(constants::MAX_INITIAL_STATUS),
-            happiness: random.get_random_u8(constants::MAX_INITIAL_STATUS),
-            hygiene: random.get_random_u8(constants::MAX_INITIAL_STATUS),
+            hunger: PseudoRandom::generate_random_u8(beast_id, 1, constants::MIN_INITIAL_STATUS, constants::MAX_INITIAL_STATUS),
+            energy: PseudoRandom::generate_random_u8(beast_id, 2, constants::MIN_INITIAL_STATUS, constants::MAX_INITIAL_STATUS),
+            happiness: PseudoRandom::generate_random_u8(beast_id, 3, constants::MIN_INITIAL_STATUS, constants::MAX_INITIAL_STATUS),
+            hygiene: PseudoRandom::generate_random_u8(beast_id, 4, constants::MIN_INITIAL_STATUS, constants::MAX_INITIAL_STATUS),
             clean_status: CleanStatus::Clean.into(),
             last_timestamp: current_timestamp,
         }
