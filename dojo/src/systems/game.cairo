@@ -350,7 +350,7 @@ pub mod game {
             player.assert_exists();
 
             let beast_id = player.current_beast_id;
-            let mut beast_status = store.read_beast_status(beast_id);
+            let mut beast_status = store.read_beast_status_from_address(beast_id, address);
 
             let current_timestampt = get_block_timestamp();
 
