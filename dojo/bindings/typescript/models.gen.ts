@@ -22,6 +22,7 @@ export interface BeastValue {
 
 // Type definition for `tamagotchi::models::beast_status::BeastStatus` struct
 export interface BeastStatus {
+	player: string;
 	beast_id: BigNumberish;
 	is_alive: boolean;
 	is_awake: boolean;
@@ -191,6 +192,7 @@ export const schema: SchemaType = {
 			beast_type: 0,
 		},
 		BeastStatus: {
+			player: "",
 			beast_id: 0,
 			is_alive: false,
 			is_awake: false,

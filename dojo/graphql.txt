@@ -1,0 +1,190 @@
+query GetBabyBeastsPlayers {
+  tamagotchiPlayerModels {
+    edges {
+      node {
+        address
+        current_beast_id
+      }
+    }
+    totalCount
+  }
+}
+
+query GetPushTokens {
+  tamagotchiPushTokenModels {
+    edges {
+      node {
+        player_address
+        token
+      }
+    }
+  }
+}
+
+query GetBabyBeastsPlayer {
+  tamagotchiPlayerModels(
+    where: {addressEQ: "0x6a970f6747b9eeaeacd379521904a660954da2d72e12c3861ae0366cfb3e1d4"}
+  ) {
+    edges {
+      node {
+        address
+        current_beast_id
+      }
+    }
+    totalCount
+  }
+}
+
+query GetPlayersTotalCount {
+  tamagotchiPlayerModels {
+    totalCount
+  }
+}
+
+query GetTransactionsTotalCount {
+  transactions {
+    totalCount
+  }
+}
+
+query GetTransactionsData {
+  transactions {
+    edges {
+      node {
+        id
+        transactionHash
+        senderAddress
+        calldata
+      }
+    }
+    totalCount
+  }
+}
+
+query GetBeastsTotalData {
+  tamagotchiBeastModels {
+    edges {
+      node {
+        beast_id
+        birth_date
+        player
+        age
+      }
+    }
+    totalCount
+  }
+}
+
+query GetBeastStatusTotalData {
+  tamagotchiBeastStatusModels(where: {hungerGT: 80, beast_idEQ: 31}) {
+    edges {
+      node {
+        beast_id
+        happiness
+        hygiene
+        hunger
+        energy
+      }
+    }
+  }
+}
+
+query GetBeastsTotalDataAgeFilter {
+  tamagotchiBeastModels(where: {ageEQ: 0}) {
+    edges {
+      node {
+        player
+        age
+      }
+    }
+    totalCount
+  }
+}
+
+query GetBeastsTotalCount {
+  tamagotchiBeastModels {
+    totalCount
+  }
+}
+
+query GetEntitiesTotalCount {
+  entities {
+    totalCount
+  }
+}
+
+query GetModelsTotalCount {
+  entities {
+    totalCount
+  }
+}
+
+query GetFoodTotalCount {
+  tamagotchiFoodModels {
+    edges {
+      node {
+        id
+        player
+      }
+    }
+    totalCount
+  }
+}
+
+query GetBeastStatusTotalCount {
+  tamagotchiBeastStatusModels {
+    edges {
+      node {
+        clean_status
+      }
+    }
+    totalCount
+  }
+}
+
+query getTransactions {
+  transactions {
+    edges {
+      node {
+        id
+        transactionHash
+        senderAddress
+        calldata
+      }
+    }
+    totalCount
+  }
+}
+
+query fetchTrophyCreation {
+  tamagotchiTrophyCreationModels {
+    edges {
+      node {
+        title
+        data
+        group
+        points
+        tasks {
+          description
+          total
+          id
+        }
+      }
+    }
+    totalCount
+  }
+}
+
+query fetchTrophyProgress {
+  tamagotchiTrophyProgressionModels {
+    edges {
+      node {
+        player_id
+        task_id
+        count
+        time
+      }
+    }
+    totalCount
+  }
+}

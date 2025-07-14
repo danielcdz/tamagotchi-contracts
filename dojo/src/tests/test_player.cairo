@@ -7,19 +7,14 @@ mod tests {
     use dojo::world::world::Event as WorldEvent;
 
     // Traits import
-    use tamagotchi::systems::game::IGameDispatcherTrait;
     use tamagotchi::systems::player::IPlayerDispatcherTrait;
 
     // Models and types import
     use tamagotchi::models::player::{Player};
-    use tamagotchi::tests::utils::{utils::{PLAYER, cheat_caller_address, create_game_system, create_player_system, create_test_world, drop_all_events}};
+    use tamagotchi::tests::utils::{utils::{PLAYER, cheat_caller_address, create_player_system, create_test_world, drop_all_events}};
 
     // Event import
     use tamagotchi::events::push::{PushToken};
-
-    // Types import
-    use tamagotchi::types::beast_status_custom::{BeastStatusCustom};
-    use tamagotchi::types::clean_status::{CleanStatus};
 
     #[test]
     #[available_gas(40000000)]

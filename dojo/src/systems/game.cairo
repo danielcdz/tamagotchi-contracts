@@ -88,6 +88,12 @@ pub mod game {
 
             store.init_player_food_random_values(current_beast_id);
 
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+            player.current_beast_id = current_beast_id;
+
+            store.write_player(@player);
+
             self.beast_counter.write(current_beast_id+1);
         }
 
@@ -100,6 +106,14 @@ pub mod game {
             store.new_beast(beast_status.beast_id, specie, beast_type, name);
 
             store.init_player_food_custom_values(beast_status.beast_id);
+
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+            let current_beast_id = self.beast_counter.read();
+            player.current_beast_id = current_beast_id;
+
+            store.write_player(@player);
+            self.beast_counter.write(current_beast_id+1);
         }
 
         // This method is used to update the beast related data and write it to the world
@@ -321,6 +335,7 @@ pub mod game {
         }
 
         // ------------------------- Read Calls -------------------------
+        // Unit testing only
         fn get_timestamp_based_status(ref self: ContractState) -> BeastStatus {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
@@ -343,6 +358,7 @@ pub mod game {
             beast_status
         }
 
+        // This is the one to be used in the client
         fn get_timestamp_based_status_with_address(ref self: ContractState, address: ContractAddress) -> BeastStatus {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
@@ -351,7 +367,7 @@ pub mod game {
             player.assert_exists();
 
             let beast_id = player.current_beast_id;
-            let mut beast_status = store.read_beast_status(beast_id);
+            let mut beast_status = store.read_beast_status_from_address(beast_id, address);
 
             let current_timestampt = get_block_timestamp();
 
@@ -365,6 +381,7 @@ pub mod game {
             beast_status
         }
 
+        // Unit testing only
         fn get_beast_age(ref self: ContractState) -> u16 {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
