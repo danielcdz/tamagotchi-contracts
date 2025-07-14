@@ -47,7 +47,7 @@ pub mod game {
     #[allow(unused_imports)]
     use tamagotchi::models::beast::{Beast, BeastTrait};
     use tamagotchi::models::beast_status::{BeastStatus, BeastStatusTrait};
-    use tamagotchi::models::player::{Player, PlayerAssert};
+    use tamagotchi::models::player::{Player, PlayerAssert, PlayerTrait};
     use tamagotchi::models::food::{Food};
 
     // Constants import
@@ -318,11 +318,11 @@ pub mod game {
             }
         }
 
-        fn set_name(ref self: ContractState, name: felt252) -> bool {
+        fn set_beast_name(ref self: ContractState, name: felt252) -> bool {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
             
-            let player: Player = store.read_player();
+            let mut player: Player = store.read_player();
             player.assert_exists();
             
             if player.gems_balance() >= constants::CHANGE_NAME_FEE {

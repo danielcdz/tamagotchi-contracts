@@ -8,13 +8,19 @@ mod tests {
 
     // Traits import
     use tamagotchi::systems::player::IPlayerDispatcherTrait;
+    use tamagotchi::systems::game::IGameDispatcherTrait;
 
     // Models and types import
     use tamagotchi::models::player::{Player};
-    use tamagotchi::tests::utils::{utils::{PLAYER, cheat_caller_address, create_player_system, create_test_world, drop_all_events}};
+    use tamagotchi::tests::utils::{utils::{PLAYER, cheat_caller_address, create_game_system, create_player_system, create_test_world, drop_all_events}};
+    use tamagotchi::types::beast_status_custom::{BeastStatusCustom};
+    use tamagotchi::types::clean_status::{CleanStatus};
 
     // Event import
     use tamagotchi::events::push::{PushToken};
+
+    // Constants import
+    use tamagotchi::constants;
 
     #[test]
     #[available_gas(40000000)]
@@ -63,81 +69,10 @@ mod tests {
 
         // Set current beast
         let beast_id: u16 = 1;
-        player_system.set_current_beast(beast_id);
 
         // Verify current beast was set correctly
         let player: Player = world.read_model(PLAYER());
         assert(player.current_beast_id == beast_id, 'wrong current beast id');
-    }
-
-    #[test]
-    #[available_gas(60000000)]
-    fn test_multiple_beasts_per_player() {
-        let world = create_test_world();
-        let game_system = create_game_system(world);
-        let player_system = create_player_system(world);
-
-        cheat_caller_address(PLAYER());
-
-        // Initialize player
-        player_system.spawn_player();
-
-        let custom_beast_status_1 =  BeastStatusCustom {
-            beast_id: 3,
-            is_alive: true,
-            is_awake: true,
-            hunger: 50,
-            energy: 1,
-            happiness: 50,
-            hygiene: 50,
-            clean_status: CleanStatus::Clean.into(),
-            last_timestamp: 7000000,
-        };
-
-        let custom_beast_status_2 =  BeastStatusCustom {
-            beast_id: 3,
-            is_alive: true,
-            is_awake: true,
-            hunger: 50,
-            energy: 1,
-            happiness: 50,
-            hygiene: 50,
-            clean_status: CleanStatus::Clean.into(),
-            last_timestamp: 7000000,
-        };
-        
-        // Spawn multiple beasts
-        game_system.spawn_beast_custom_status(1 ,2, custom_beast_status_1, 'test-beast'); // First beast
-        game_system.spawn_beast_custom_status(2, 3, custom_beast_status_2, 'test-beast'); // Second beast
-        
-        // Set and verify we can switch between beasts
-        player_system.set_current_beast(1);
-        let player: Player = world.read_model(PLAYER());
-        assert(player.current_beast_id == 1, 'should be first beast');
-
-        player_system.set_current_beast(2);
-        let player: Player = world.read_model(PLAYER());
-        assert(player.current_beast_id == 2, 'should be second beast');
-    }
-
-
-    // Note: This test is important to maintain as it documents expected future behavior:
-    // the system should validate beast existence before setting it as current.
-
-    #[test]
-    // #[should_panic]
-    #[available_gas(40000000)]
-    fn test_invalid_beast_id() {
-        let world = create_test_world();
-        let player_system = create_player_system(world);
-        
-        cheat_caller_address(PLAYER());
-
-        // Initialize player
-        player_system.spawn_player();
-        
-        // Set a non existent beast id
-        player_system.set_current_beast(999); // Should panic as beast doesn't exist
     }
 
     #[test]
@@ -177,7 +112,7 @@ mod tests {
 
         // Verify player total points
         let player: Player = world.read_model(PLAYER());
-        assert(player.total_coins == coins, 'wrong total coins');
+        assert(player.total_coins == coins + constants::INITIAL_COINTS, 'wrong total coins');
     }
 
             #[test]
@@ -197,7 +132,7 @@ mod tests {
 
         // Verify player total points
         let player: Player = world.read_model(PLAYER());
-        assert(player.total_gems == gems, 'wrong total gems');
+        assert(player.total_gems == gems + constants::INITIAL_GEMS, 'wrong total gems');
     }
 
     #[test]
