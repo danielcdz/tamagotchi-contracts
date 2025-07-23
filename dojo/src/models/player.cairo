@@ -50,8 +50,16 @@ pub impl PlayerImpl of PlayerTrait {
         self.total_coins += coins;
     }
 
+    fn decrease_total_coins(ref self: Player, coins: u32) {
+        self.total_coins -= coins;
+    }
+
     fn increase_total_gems(ref self: Player, gems: u32) {
         self.total_gems += gems;
+    }
+
+    fn decrease_total_gems(ref self: Player, gems: u32) {
+        self.total_gems -= gems;
     }
 
     fn gems_balance(ref self: Player) -> u32 {

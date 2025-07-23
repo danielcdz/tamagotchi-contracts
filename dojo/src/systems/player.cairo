@@ -8,7 +8,7 @@ pub trait IPlayer<T> {
     fn update_player_total_coins(ref self: T, coins: u32);
     fn update_player_total_gems(ref self: T, gems: u32);
     fn update_player_minigame_highest_score(ref self: T, points: u32, minigame_id: u16);
-    fn add_or_update_food_amount(ref self: T, food_id: u8, amount: u8);
+    fn add_or_update_food_amount(ref self: T, food_id: u8, amount: u8, price: u32);
     fn emit_player_push_token(ref self: T, token: ByteArray);
 }
 

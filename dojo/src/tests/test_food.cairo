@@ -196,7 +196,7 @@ mod tests {
         let test_food_id: u8 = 5; // CakeChocolate
         let initial_amount: u8 = 10;
 
-        player_system.add_or_update_food_amount(test_food_id, initial_amount);
+        player_system.add_or_update_food_amount(test_food_id, initial_amount, 0);
 
         // Verify that the food was created correctly
         let initial_food: Food = world.read_model((PLAYER(), test_food_id));
@@ -204,7 +204,7 @@ mod tests {
 
         // Update the food amount (add 5 more)
         let additional_amount: u8 = 5;
-        player_system.add_or_update_food_amount(test_food_id, additional_amount);
+        player_system.add_or_update_food_amount(test_food_id, additional_amount, 0);
 
         // Read the updated food amount
         let updated_food: Food = world.read_model((PLAYER(), test_food_id));
@@ -305,7 +305,7 @@ mod tests {
         let test_food_id: u8 = 1; // Apple
         let initial_amount: u8 = 1;
 
-        player_system.add_or_update_food_amount(test_food_id, initial_amount);
+        player_system.add_or_update_food_amount(test_food_id, initial_amount, 0);
 
         // Verify that the food was created correctly
         let initial_food: Food = world.read_model((PLAYER(), test_food_id));
@@ -322,7 +322,7 @@ mod tests {
 
         // Case 2: Try to add more food after reaching 0
         let new_amount: u8 = 3;
-        player_system.add_or_update_food_amount(test_food_id, new_amount);
+        player_system.add_or_update_food_amount(test_food_id, new_amount, 0);
 
         // // Verify that the amount was updated correctly
         let updated_food: Food = world.read_model((PLAYER(), test_food_id));
@@ -332,7 +332,7 @@ mod tests {
 
         // // Case 3: Create a different food and verify that both exist
         let another_food_id: u8 = 7; // Cheese
-        player_system.add_or_update_food_amount(another_food_id, 8);
+        player_system.add_or_update_food_amount(another_food_id, 8, 0);
 
         // // Verify that both foods exist with correct amounts
         let final_first_food: Food = world.read_model((PLAYER(), test_food_id));
@@ -383,9 +383,9 @@ mod tests {
         let beef_initial: u8 = 3;
 
         // Create the foods
-        player_system.add_or_update_food_amount(apple_id, apple_initial);
-        player_system.add_or_update_food_amount(banana_id, banana_initial);
-        player_system.add_or_update_food_amount(beef_id, beef_initial);
+        player_system.add_or_update_food_amount(apple_id, apple_initial, 0);
+        player_system.add_or_update_food_amount(banana_id, banana_initial, 0);
+        player_system.add_or_update_food_amount(beef_id, beef_initial, 0);
 
         // Verify initial amounts
         let initial_apple: Food = world.read_model((PLAYER(), apple_id));
@@ -401,9 +401,9 @@ mod tests {
         let banana_add: u8 = 7;
         let beef_add: u8 = 2;
 
-        player_system.add_or_update_food_amount(apple_id, apple_add); // Add apples
-        player_system.add_or_update_food_amount(banana_id, banana_add); // Add bananas
-        player_system.add_or_update_food_amount(beef_id, beef_add); // Add beefs
+        player_system.add_or_update_food_amount(apple_id, apple_add, 0); // Add apples
+        player_system.add_or_update_food_amount(banana_id, banana_add, 0); // Add bananas
+        player_system.add_or_update_food_amount(beef_id, beef_add, 0); // Add beefs
 
         // Read updated amounts
         let updated_apple: Food = world.read_model((PLAYER(), apple_id));
