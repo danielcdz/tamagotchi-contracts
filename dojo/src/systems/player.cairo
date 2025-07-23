@@ -115,20 +115,27 @@ pub mod player {
             }
         }
 
-        fn add_or_update_food_amount(ref self: ContractState, food_id: u8, amount: u8) {
+        fn add_or_update_food_amount(ref self: ContractState, food_id: u8, amount: u8, price: u32) { 
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
 
-            // Read the current food model using the provided ID
-            let mut food: Food = store.read_food(food_id);
+            let mut player: Player = store.read_player();
+            player.assert_exists();
 
-            if food.amount == 0 {
-                // If the food does not exist, create a new one
-                store.new_food(food_id, amount);
-            } else {
-                // If the food already exists, update the amount
-                food.update_food_total_amount(amount);
-                store.write_food(@food);
+            if player.coins_balance() >= price {
+                player.decrease_total_coins(price);
+
+                // Read the current food model using the provided ID
+                let mut food: Food = store.read_food(food_id);
+
+                if food.amount == 0 {
+                    // If the food does not exist, create a new one
+                    store.new_food(food_id, amount);
+                } else {
+                    // If the food already exists, update the amount
+                    food.update_food_total_amount(amount);
+                    store.write_food(@food);
+                }
             }
         }
 
