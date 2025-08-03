@@ -136,6 +136,8 @@ pub mod player {
                     food.update_food_total_amount(amount);
                     store.write_food(@food);
                 }
+
+                store.write_player(@player);
             }
         }
 
