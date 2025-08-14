@@ -10,6 +10,7 @@ pub trait IPlayer<T> {
     fn update_player_minigame_highest_score(ref self: T, points: u32, minigame_id: u16);
     fn add_or_update_food_amount(ref self: T, food_id: u8, amount: u8, price: u32);
     fn emit_player_push_token(ref self: T, token: ByteArray);
+    fn set_player_name(ref self: T, name: felt252) -> bool;
 }
 
 #[dojo::contract]
@@ -39,6 +40,9 @@ pub mod player {
     #[allow(unused_imports)]
     use dojo::event::EventStorage;
 
+    // Constants imports
+    use tamagotchi::constants;
+
     // Constructor
     fn dojo_init(ref self: ContractState) {}
 
@@ -51,6 +55,23 @@ pub mod player {
             let store = StoreTrait::new(world);
 
             store.new_player();
+        }
+
+        fn set_player_name(ref self: ContractState, name: felt252) -> bool {
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+            
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+            
+            if player.gems_balance() >= constants::CHANGE_NAME_FEE {
+                player.decrease_total_gems(constants::CHANGE_NAME_FEE);
+                player.set_name(name);
+                store.write_player(@player);
+                return true;
+            }
+            
+            return false;
         }
 
         fn update_player_daily_streak(ref self: ContractState) {

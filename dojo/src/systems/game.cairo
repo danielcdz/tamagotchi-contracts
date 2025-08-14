@@ -327,7 +327,10 @@ pub mod game {
             
             if player.gems_balance() >= constants::CHANGE_NAME_FEE {
                 let mut beast: Beast = store.read_beast(player.current_beast_id);
+                player.decrease_total_gems(constants::CHANGE_NAME_FEE);
                 beast.set_name(name);
+                store.write_player(@player);
+                store.write_beast(@beast);
                 return true;
             }
             

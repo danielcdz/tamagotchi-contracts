@@ -14,6 +14,7 @@ use tamagotchi::helpers::timestamp::Timestamp;
 pub struct Player {
     #[key]
     pub address: ContractAddress, 
+    pub name: felt252,
     pub current_beast_id: u16,
     pub daily_streak: u16,
     pub total_points: u32,
@@ -69,6 +70,10 @@ pub impl PlayerImpl of PlayerTrait {
     fn coins_balance(ref self: Player) -> u32 {
         return self.total_coins;
     }
+
+    fn set_name(ref self: Player, name: felt252) {
+        self.name = name;
+    }
 }
 
 #[generate_trait]
@@ -89,6 +94,7 @@ pub impl ZeroablePlayerTrait of Zero<Player> {
     fn zero() -> Player {
         Player {
             address: constants::ZERO_ADDRESS(),
+            name: 'Player',
             current_beast_id: 0,
             total_points: 0,
             total_coins: 0,
@@ -126,6 +132,7 @@ mod tests {
 
         let player = Player {
             address: mock_address,
+            name: 'Player',
             current_beast_id: initial_beast_id,
             total_points: 0,
             total_coins: 0,
@@ -181,6 +188,7 @@ mod tests {
         
         let player = Player {
             address: mock_address,
+            name: 'Player',
             current_beast_id: 0,
             total_points: 0,
             daily_streak: 0,
@@ -205,6 +213,7 @@ mod tests {
 
         let player1 = Player {
             address: address1,
+            name: 'Player',
             current_beast_id: 1,
             total_points: 0,
             total_coins: 0,
@@ -216,6 +225,7 @@ mod tests {
 
         let player2 = Player {
             address: address2,
+            name: 'Player',
             current_beast_id: 2,
             total_points: 0,
             total_coins: 0,
