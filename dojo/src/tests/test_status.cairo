@@ -38,7 +38,7 @@ mod tests {
 
         // Create player, food, and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
         
 
         // Get new timestamp calculated status
@@ -88,7 +88,7 @@ mod tests {
 
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
         
 
         // Make beast sleep first
@@ -134,7 +134,7 @@ mod tests {
 
         // Create player, food, and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
         
 
         // Get new timestamp calculated status
@@ -179,7 +179,7 @@ mod tests {
 
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
         
 
         // Get status after decrease
@@ -224,7 +224,7 @@ mod tests {
 
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
         
 
         // Get status after decrease
@@ -270,7 +270,7 @@ mod tests {
 
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
         
 
         // -----------------------------------------------
@@ -331,7 +331,7 @@ mod tests {
 
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
         
 
         // Get final status
@@ -368,7 +368,8 @@ mod tests {
 
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
+        
 
         // Get status when dead
         cheat_block_timestamp(8000000); // Kill beast
@@ -423,7 +424,7 @@ mod tests {
 
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
         
 
         let mut status: BeastStatus = game_system.get_timestamp_based_status();
@@ -486,7 +487,7 @@ mod tests {
 
         // Create player and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status);
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
         
 
         game_system.sleep();

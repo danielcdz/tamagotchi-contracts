@@ -14,9 +14,12 @@ use tamagotchi::helpers::timestamp::Timestamp;
 pub struct Player {
     #[key]
     pub address: ContractAddress, 
+    pub name: felt252,
     pub current_beast_id: u16,
     pub daily_streak: u16,
     pub total_points: u32,
+    pub total_coins: u32,
+    pub total_gems: u32,
     pub last_active_day: u32,
     pub creation_day: u32
 }
@@ -40,10 +43,37 @@ pub impl PlayerImpl of PlayerTrait {
         self.last_active_day = current_day;
     }
 
-    fn update_total_points(ref self: Player, points: u32) {
+    fn increase_total_points(ref self: Player, points: u32) {
         self.total_points += points;
     }
 
+    fn increase_total_coins(ref self: Player, coins: u32) {
+        self.total_coins += coins;
+    }
+
+    fn decrease_total_coins(ref self: Player, coins: u32) {
+        self.total_coins -= coins;
+    }
+
+    fn increase_total_gems(ref self: Player, gems: u32) {
+        self.total_gems += gems;
+    }
+
+    fn decrease_total_gems(ref self: Player, gems: u32) {
+        self.total_gems -= gems;
+    }
+
+    fn gems_balance(ref self: Player) -> u32 {
+        return self.total_gems;
+    }
+
+    fn coins_balance(ref self: Player) -> u32 {
+        return self.total_coins;
+    }
+
+    fn set_name(ref self: Player, name: felt252) {
+        self.name = name;
+    }
 }
 
 #[generate_trait]
@@ -64,8 +94,11 @@ pub impl ZeroablePlayerTrait of Zero<Player> {
     fn zero() -> Player {
         Player {
             address: constants::ZERO_ADDRESS(),
+            name: 'Player',
             current_beast_id: 0,
             total_points: 0,
+            total_coins: 0,
+            total_gems: 0,
             daily_streak: 0,
             last_active_day: 0,
             creation_day: 1,
@@ -99,8 +132,11 @@ mod tests {
 
         let player = Player {
             address: mock_address,
+            name: 'Player',
             current_beast_id: initial_beast_id,
             total_points: 0,
+            total_coins: 0,
+            total_gems: 0,
             daily_streak: 0,
             last_active_day: 0,
             creation_day: 1,
@@ -152,9 +188,12 @@ mod tests {
         
         let player = Player {
             address: mock_address,
+            name: 'Player',
             current_beast_id: 0,
             total_points: 0,
             daily_streak: 0,
+            total_coins: 0,
+            total_gems: 0,
             last_active_day: 0,
             creation_day: 1,
         };
@@ -174,8 +213,11 @@ mod tests {
 
         let player1 = Player {
             address: address1,
+            name: 'Player',
             current_beast_id: 1,
             total_points: 0,
+            total_coins: 0,
+            total_gems: 0,
             daily_streak: 0,
             last_active_day: 0,
             creation_day: 1,
@@ -183,8 +225,11 @@ mod tests {
 
         let player2 = Player {
             address: address2,
+            name: 'Player',
             current_beast_id: 2,
             total_points: 0,
+            total_coins: 0,
+            total_gems: 0,
             daily_streak: 0,
             last_active_day: 0,
             creation_day: 1,

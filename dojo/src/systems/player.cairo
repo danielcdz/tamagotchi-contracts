@@ -5,9 +5,12 @@ pub trait IPlayer<T> {
     fn spawn_player(ref self: T);
     fn update_player_daily_streak(ref self: T);
     fn update_player_total_points(ref self: T, points: u32);
+    fn update_player_total_coins(ref self: T, coins: u32);
+    fn update_player_total_gems(ref self: T, gems: u32);
     fn update_player_minigame_highest_score(ref self: T, points: u32, minigame_id: u16);
-    fn add_or_update_food_amount(ref self: T, food_id: u8, amount: u8);
+    fn add_or_update_food_amount(ref self: T, food_id: u8, amount: u8, price: u32);
     fn emit_player_push_token(ref self: T, token: ByteArray);
+    fn set_player_name(ref self: T, name: felt252) -> bool;
 }
 
 #[dojo::contract]
@@ -37,6 +40,9 @@ pub mod player {
     #[allow(unused_imports)]
     use dojo::event::EventStorage;
 
+    // Constants imports
+    use tamagotchi::constants;
+
     // Constructor
     fn dojo_init(ref self: ContractState) {}
 
@@ -49,6 +55,23 @@ pub mod player {
             let store = StoreTrait::new(world);
 
             store.new_player();
+        }
+
+        fn set_player_name(ref self: ContractState, name: felt252) -> bool {
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+            
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+            
+            if player.gems_balance() >= constants::CHANGE_NAME_FEE {
+                player.decrease_total_gems(constants::CHANGE_NAME_FEE);
+                player.set_name(name);
+                store.write_player(@player);
+                return true;
+            }
+            
+            return false;
         }
 
         fn update_player_daily_streak(ref self: ContractState) {
@@ -72,7 +95,31 @@ pub mod player {
             let mut player: Player = store.read_player();
             player.assert_exists();
 
-            player.update_total_points(points);
+            player.increase_total_points(points);
+
+            store.write_player(@player);
+        }
+
+        fn update_player_total_coins(ref self: ContractState, coins: u32) {
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+
+            player.increase_total_coins(coins);
+
+            store.write_player(@player);
+        }
+
+        fn update_player_total_gems(ref self: ContractState, gems: u32) {
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+
+            player.increase_total_gems(gems);
 
             store.write_player(@player);
         }
@@ -89,20 +136,29 @@ pub mod player {
             }
         }
 
-        fn add_or_update_food_amount(ref self: ContractState, food_id: u8, amount: u8) {
+        fn add_or_update_food_amount(ref self: ContractState, food_id: u8, amount: u8, price: u32) { 
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
 
-            // Read the current food model using the provided ID
-            let mut food: Food = store.read_food(food_id);
+            let mut player: Player = store.read_player();
+            player.assert_exists();
 
-            if food.amount == 0 {
-                // If the food does not exist, create a new one
-                store.new_food(food_id, amount);
-            } else {
-                // If the food already exists, update the amount
-                food.update_food_total_amount(amount);
-                store.write_food(@food);
+            if player.coins_balance() >= price {
+                player.decrease_total_coins(price);
+
+                // Read the current food model using the provided ID
+                let mut food: Food = store.read_food(food_id);
+
+                if food.amount == 0 {
+                    // If the food does not exist, create a new one
+                    store.new_food(food_id, amount);
+                } else {
+                    // If the food already exists, update the amount
+                    food.update_food_total_amount(amount);
+                    store.write_food(@food);
+                }
+
+                store.write_player(@player);
             }
         }
 

@@ -8,13 +8,19 @@ mod tests {
 
     // Traits import
     use tamagotchi::systems::player::IPlayerDispatcherTrait;
+    use tamagotchi::systems::game::IGameDispatcherTrait;
 
     // Models and types import
     use tamagotchi::models::player::{Player};
-    use tamagotchi::tests::utils::{utils::{PLAYER, cheat_caller_address, create_player_system, create_test_world, drop_all_events}};
+    use tamagotchi::tests::utils::{utils::{PLAYER, cheat_caller_address, create_game_system, create_player_system, create_test_world, drop_all_events}};
+    use tamagotchi::types::beast_status_custom::{BeastStatusCustom};
+    use tamagotchi::types::clean_status::{CleanStatus};
 
     // Event import
     use tamagotchi::events::push::{PushToken};
+
+    // Constants import
+    use tamagotchi::constants;
 
     #[test]
     #[available_gas(40000000)]
@@ -31,6 +37,42 @@ mod tests {
         // Verify player state
         let player: Player = world.read_model(PLAYER());
         assert(player.current_beast_id == 0, 'invalid initial beast id');
+    }
+
+    #[test]
+    #[available_gas(50000000)]
+    fn test_set_current_beast() {
+        let world = create_test_world();
+        let game_system = create_game_system(world);
+        let player_system = create_player_system(world);
+
+
+        cheat_caller_address(PLAYER());
+
+        // Initialize player
+        player_system.spawn_player();
+        
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 3,
+            is_alive: true,
+            is_awake: true,
+            hunger: 50,
+            energy: 1,
+            happiness: 50,
+            hygiene: 50,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+        
+        // Spawn a beast first
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
+
+        // Set current beast
+        let beast_id: u16 = 1;
+
+        // Verify current beast was set correctly
+        let player: Player = world.read_model(PLAYER());
+        assert(player.current_beast_id == beast_id, 'wrong current beast id');
     }
 
     #[test]
@@ -51,6 +93,46 @@ mod tests {
         // Verify player total points
         let player: Player = world.read_model(PLAYER());
         assert(player.total_points == points, 'wrong total points');
+    }
+
+    #[test]
+    #[available_gas(40000000)]
+    fn test_update_player_total_coins() {
+        let world = create_test_world();
+        let player_system = create_player_system(world);
+
+        cheat_caller_address(PLAYER());
+
+        // Initialize player
+        player_system.spawn_player();
+
+        // Update player total points
+        let coins: u32 = 1000;
+        player_system.update_player_total_coins(coins);
+
+        // Verify player total points
+        let player: Player = world.read_model(PLAYER());
+        assert(player.total_coins == coins + constants::INITIAL_COINTS, 'wrong total coins');
+    }
+
+            #[test]
+    #[available_gas(40000000)]
+    fn test_update_player_total_gems() {
+        let world = create_test_world();
+        let player_system = create_player_system(world);
+
+        cheat_caller_address(PLAYER());
+
+        // Initialize player
+        player_system.spawn_player();
+
+        // Update player total points
+        let gems: u32 = 1000;
+        player_system.update_player_total_gems(gems);
+
+        // Verify player total points
+        let player: Player = world.read_model(PLAYER());
+        assert(player.total_gems == gems + constants::INITIAL_GEMS, 'wrong total gems');
     }
 
     #[test]

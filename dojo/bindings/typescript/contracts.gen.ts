@@ -1,5 +1,5 @@
 import { DojoProvider, DojoCall } from "@dojoengine/core";
-import { Account, AccountInterface, BigNumberish, CairoOption, CairoCustomEnum, ByteArray } from "starknet";
+import { Account, AccountInterface, Number, CairoOption, CairoCustomEnum } from "starknet";
 import * as models from "./models.gen";
 
 export function setupWorld(provider: DojoProvider) {
@@ -130,7 +130,7 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_achieve_achieveFlappyBeastHighscore_calldata = (score: BigNumberish): DojoCall => {
+	const build_achieve_achieveFlappyBeastHighscore_calldata = (score: Number): DojoCall => {
 		return {
 			contractName: "achieve",
 			entrypoint: "achieve_flappy_beast_highscore",
@@ -138,7 +138,7 @@ export function setupWorld(provider: DojoProvider) {
 		};
 	};
 
-	const achieve_achieveFlappyBeastHighscore = async (snAccount: Account | AccountInterface, score: BigNumberish) => {
+	const achieve_achieveFlappyBeastHighscore = async (snAccount: Account | AccountInterface, score: Number) => {
 		try {
 			return await provider.execute(
 				snAccount,
@@ -151,7 +151,7 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_achieve_achievePlatformHighscore_calldata = (score: BigNumberish): DojoCall => {
+	const build_achieve_achievePlatformHighscore_calldata = (score: Number): DojoCall => {
 		return {
 			contractName: "achieve",
 			entrypoint: "achieve_platform_highscore",
@@ -159,7 +159,7 @@ export function setupWorld(provider: DojoProvider) {
 		};
 	};
 
-	const achieve_achievePlatformHighscore = async (snAccount: Account | AccountInterface, score: BigNumberish) => {
+	const achieve_achievePlatformHighscore = async (snAccount: Account | AccountInterface, score: Number) => {
 		try {
 			return await provider.execute(
 				snAccount,
@@ -214,7 +214,7 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_achieve_achieveScoreShare_calldata = (score: BigNumberish): DojoCall => {
+	const build_achieve_achieveScoreShare_calldata = (score: Number): DojoCall => {
 		return {
 			contractName: "achieve",
 			entrypoint: "achieve_score_share",
@@ -222,32 +222,11 @@ export function setupWorld(provider: DojoProvider) {
 		};
 	};
 
-	const achieve_achieveScoreShare = async (snAccount: Account | AccountInterface, score: BigNumberish) => {
+	const achieve_achieveScoreShare = async (snAccount: Account | AccountInterface, score: Number) => {
 		try {
 			return await provider.execute(
 				snAccount,
 				build_achieve_achieveScoreShare_calldata(score),
-				"tamagotchi",
-			);
-		} catch (error) {
-			console.error(error);
-			throw error;
-		}
-	};
-
-	const build_player_addOrUpdateFoodAmount_calldata = (foodId: BigNumberish, amount: BigNumberish): DojoCall => {
-		return {
-			contractName: "player",
-			entrypoint: "add_or_update_food_amount",
-			calldata: [foodId, amount],
-		};
-	};
-
-	const player_addOrUpdateFoodAmount = async (snAccount: Account | AccountInterface, foodId: BigNumberish, amount: BigNumberish) => {
-		try {
-			return await provider.execute(
-				snAccount,
-				build_player_addOrUpdateFoodAmount_calldata(foodId, amount),
 				"tamagotchi",
 			);
 		} catch (error) {
@@ -298,28 +277,7 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_player_emitPlayerPushToken_calldata = (token: ByteArray): DojoCall => {
-		return {
-			contractName: "player",
-			entrypoint: "emit_player_push_token",
-			calldata: [token],
-		};
-	};
-
-	const player_emitPlayerPushToken = async (snAccount: Account | AccountInterface, token: ByteArray) => {
-		try {
-			return await provider.execute(
-				snAccount,
-				build_player_emitPlayerPushToken_calldata(token),
-				"tamagotchi",
-			);
-		} catch (error) {
-			console.error(error);
-			throw error;
-		}
-	};
-
-	const build_game_feed_calldata = (foodId: BigNumberish): DojoCall => {
+	const build_game_feed_calldata = (foodId: Number): DojoCall => {
 		return {
 			contractName: "game",
 			entrypoint: "feed",
@@ -327,7 +285,7 @@ export function setupWorld(provider: DojoProvider) {
 		};
 	};
 
-	const game_feed = async (snAccount: Account | AccountInterface, foodId: BigNumberish) => {
+	const game_feed = async (snAccount: Account | AccountInterface, foodId: Number) => {
 		try {
 			return await provider.execute(
 				snAccount,
@@ -487,6 +445,27 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
+	const build_game_setBeastName_calldata = (name: Number): DojoCall => {
+		return {
+			contractName: "game",
+			entrypoint: "set_beast_name",
+			calldata: [name],
+		};
+	};
+
+	const game_setBeastName = async (snAccount: Account | AccountInterface, name: Number) => {
+		try {
+			return await provider.execute(
+				snAccount,
+				build_game_setBeastName_calldata(name),
+				"tamagotchi",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
 	const build_game_sleep_calldata = (): DojoCall => {
 		return {
 			contractName: "game",
@@ -508,19 +487,19 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_game_spawnBeast_calldata = (specie: BigNumberish, beastType: BigNumberish): DojoCall => {
+	const build_game_spawnBeast_calldata = (specie: Number, beastType: Number, name: Number): DojoCall => {
 		return {
 			contractName: "game",
 			entrypoint: "spawn_beast",
-			calldata: [specie, beastType],
+			calldata: [specie, beastType, name],
 		};
 	};
 
-	const game_spawnBeast = async (snAccount: Account | AccountInterface, specie: BigNumberish, beastType: BigNumberish) => {
+	const game_spawnBeast = async (snAccount: Account | AccountInterface, specie: Number, beastType: Number, name: Number) => {
 		try {
 			return await provider.execute(
 				snAccount,
-				build_game_spawnBeast_calldata(specie, beastType),
+				build_game_spawnBeast_calldata(specie, beastType, name),
 				"tamagotchi",
 			);
 		} catch (error) {
@@ -529,40 +508,19 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_game_spawnBeastCustomStatus_calldata = (specie: BigNumberish, beastType: BigNumberish, beastStatus: models.BeastStatusCustom): DojoCall => {
+	const build_game_spawnBeastCustomStatus_calldata = (specie: Number, beastType: Number, beastStatus: models.BeastStatusCustom, name: Number): DojoCall => {
 		return {
 			contractName: "game",
 			entrypoint: "spawn_beast_custom_status",
-			calldata: [specie, beastType, beastStatus],
+			calldata: [specie, beastType, beastStatus, name],
 		};
 	};
 
-	const game_spawnBeastCustomStatus = async (snAccount: Account | AccountInterface, specie: BigNumberish, beastType: BigNumberish, beastStatus: models.BeastStatusCustom) => {
+	const game_spawnBeastCustomStatus = async (snAccount: Account | AccountInterface, specie: Number, beastType: Number, beastStatus: models.BeastStatusCustom, name: Number) => {
 		try {
 			return await provider.execute(
 				snAccount,
-				build_game_spawnBeastCustomStatus_calldata(specie, beastType, beastStatus),
-				"tamagotchi",
-			);
-		} catch (error) {
-			console.error(error);
-			throw error;
-		}
-	};
-
-	const build_player_spawnPlayer_calldata = (): DojoCall => {
-		return {
-			contractName: "player",
-			entrypoint: "spawn_player",
-			calldata: [],
-		};
-	};
-
-	const player_spawnPlayer = async (snAccount: Account | AccountInterface) => {
-		try {
-			return await provider.execute(
-				snAccount,
-				build_player_spawnPlayer_calldata(),
+				build_game_spawnBeastCustomStatus_calldata(specie, beastType, beastStatus, name),
 				"tamagotchi",
 			);
 		} catch (error) {
@@ -592,6 +550,90 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
+	const build_player_addOrUpdateFoodAmount_calldata = (foodId: Number, amount: Number, price: Number): DojoCall => {
+		return {
+			contractName: "player",
+			entrypoint: "add_or_update_food_amount",
+			calldata: [foodId, amount, price],
+		};
+	};
+
+	const player_addOrUpdateFoodAmount = async (snAccount: Account | AccountInterface, foodId: Number, amount: Number, price: Number) => {
+		try {
+			return await provider.execute(
+				snAccount,
+				build_player_addOrUpdateFoodAmount_calldata(foodId, amount, price),
+				"tamagotchi",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
+	const build_player_emitPlayerPushToken_calldata = (token: string): DojoCall => {
+		return {
+			contractName: "player",
+			entrypoint: "emit_player_push_token",
+			calldata: [token],
+		};
+	};
+
+	const player_emitPlayerPushToken = async (snAccount: Account | AccountInterface, token: string) => {
+		try {
+			return await provider.execute(
+				snAccount,
+				build_player_emitPlayerPushToken_calldata(token),
+				"tamagotchi",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
+	const build_player_setPlayerName_calldata = (name: Number): DojoCall => {
+		return {
+			contractName: "player",
+			entrypoint: "set_player_name",
+			calldata: [name],
+		};
+	};
+
+	const player_setPlayerName = async (snAccount: Account | AccountInterface, name: Number) => {
+		try {
+			return await provider.execute(
+				snAccount,
+				build_player_setPlayerName_calldata(name),
+				"tamagotchi",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
+	const build_player_spawnPlayer_calldata = (): DojoCall => {
+		return {
+			contractName: "player",
+			entrypoint: "spawn_player",
+			calldata: [],
+		};
+	};
+
+	const player_spawnPlayer = async (snAccount: Account | AccountInterface) => {
+		try {
+			return await provider.execute(
+				snAccount,
+				build_player_spawnPlayer_calldata(),
+				"tamagotchi",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
 	const build_player_updatePlayerDailyStreak_calldata = (): DojoCall => {
 		return {
 			contractName: "player",
@@ -613,7 +655,7 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_player_updatePlayerMinigameHighestScore_calldata = (points: BigNumberish, minigameId: BigNumberish): DojoCall => {
+	const build_player_updatePlayerMinigameHighestScore_calldata = (points: Number, minigameId: Number): DojoCall => {
 		return {
 			contractName: "player",
 			entrypoint: "update_player_minigame_highest_score",
@@ -621,7 +663,7 @@ export function setupWorld(provider: DojoProvider) {
 		};
 	};
 
-	const player_updatePlayerMinigameHighestScore = async (snAccount: Account | AccountInterface, points: BigNumberish, minigameId: BigNumberish) => {
+	const player_updatePlayerMinigameHighestScore = async (snAccount: Account | AccountInterface, points: Number, minigameId: Number) => {
 		try {
 			return await provider.execute(
 				snAccount,
@@ -634,7 +676,49 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_player_updatePlayerTotalPoints_calldata = (points: BigNumberish): DojoCall => {
+	const build_player_updatePlayerTotalCoins_calldata = (coins: Number): DojoCall => {
+		return {
+			contractName: "player",
+			entrypoint: "update_player_total_coins",
+			calldata: [coins],
+		};
+	};
+
+	const player_updatePlayerTotalCoins = async (snAccount: Account | AccountInterface, coins: Number) => {
+		try {
+			return await provider.execute(
+				snAccount,
+				build_player_updatePlayerTotalCoins_calldata(coins),
+				"tamagotchi",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
+	const build_player_updatePlayerTotalGems_calldata = (gems: Number): DojoCall => {
+		return {
+			contractName: "player",
+			entrypoint: "update_player_total_gems",
+			calldata: [gems],
+		};
+	};
+
+	const player_updatePlayerTotalGems = async (snAccount: Account | AccountInterface, gems: Number) => {
+		try {
+			return await provider.execute(
+				snAccount,
+				build_player_updatePlayerTotalGems_calldata(gems),
+				"tamagotchi",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
+	const build_player_updatePlayerTotalPoints_calldata = (points: Number): DojoCall => {
 		return {
 			contractName: "player",
 			entrypoint: "update_player_total_points",
@@ -642,7 +726,7 @@ export function setupWorld(provider: DojoProvider) {
 		};
 	};
 
-	const player_updatePlayerTotalPoints = async (snAccount: Account | AccountInterface, points: BigNumberish) => {
+	const player_updatePlayerTotalPoints = async (snAccount: Account | AccountInterface, points: Number) => {
 		try {
 			return await provider.execute(
 				snAccount,
@@ -682,20 +766,6 @@ export function setupWorld(provider: DojoProvider) {
 			achieveScoreShare: achieve_achieveScoreShare,
 			buildAchieveScoreShareCalldata: build_achieve_achieveScoreShare_calldata,
 		},
-		player: {
-			addOrUpdateFoodAmount: player_addOrUpdateFoodAmount,
-			buildAddOrUpdateFoodAmountCalldata: build_player_addOrUpdateFoodAmount_calldata,
-			emitPlayerPushToken: player_emitPlayerPushToken,
-			buildEmitPlayerPushTokenCalldata: build_player_emitPlayerPushToken_calldata,
-			spawnPlayer: player_spawnPlayer,
-			buildSpawnPlayerCalldata: build_player_spawnPlayer_calldata,
-			updatePlayerDailyStreak: player_updatePlayerDailyStreak,
-			buildUpdatePlayerDailyStreakCalldata: build_player_updatePlayerDailyStreak_calldata,
-			updatePlayerMinigameHighestScore: player_updatePlayerMinigameHighestScore,
-			buildUpdatePlayerMinigameHighestScoreCalldata: build_player_updatePlayerMinigameHighestScore_calldata,
-			updatePlayerTotalPoints: player_updatePlayerTotalPoints,
-			buildUpdatePlayerTotalPointsCalldata: build_player_updatePlayerTotalPoints_calldata,
-		},
 		game: {
 			awake: game_awake,
 			buildAwakeCalldata: build_game_awake_calldata,
@@ -717,6 +787,8 @@ export function setupWorld(provider: DojoProvider) {
 			buildPlayCalldata: build_game_play_calldata,
 			revive: game_revive,
 			buildReviveCalldata: build_game_revive_calldata,
+			setBeastName: game_setBeastName,
+			buildSetBeastNameCalldata: build_game_setBeastName_calldata,
 			sleep: game_sleep,
 			buildSleepCalldata: build_game_sleep_calldata,
 			spawnBeast: game_spawnBeast,
@@ -725,6 +797,26 @@ export function setupWorld(provider: DojoProvider) {
 			buildSpawnBeastCustomStatusCalldata: build_game_spawnBeastCustomStatus_calldata,
 			updateBeast: game_updateBeast,
 			buildUpdateBeastCalldata: build_game_updateBeast_calldata,
+		},
+		player: {
+			addOrUpdateFoodAmount: player_addOrUpdateFoodAmount,
+			buildAddOrUpdateFoodAmountCalldata: build_player_addOrUpdateFoodAmount_calldata,
+			emitPlayerPushToken: player_emitPlayerPushToken,
+			buildEmitPlayerPushTokenCalldata: build_player_emitPlayerPushToken_calldata,
+			setPlayerName: player_setPlayerName,
+			buildSetPlayerNameCalldata: build_player_setPlayerName_calldata,
+			spawnPlayer: player_spawnPlayer,
+			buildSpawnPlayerCalldata: build_player_spawnPlayer_calldata,
+			updatePlayerDailyStreak: player_updatePlayerDailyStreak,
+			buildUpdatePlayerDailyStreakCalldata: build_player_updatePlayerDailyStreak_calldata,
+			updatePlayerMinigameHighestScore: player_updatePlayerMinigameHighestScore,
+			buildUpdatePlayerMinigameHighestScoreCalldata: build_player_updatePlayerMinigameHighestScore_calldata,
+			updatePlayerTotalCoins: player_updatePlayerTotalCoins,
+			buildUpdatePlayerTotalCoinsCalldata: build_player_updatePlayerTotalCoins_calldata,
+			updatePlayerTotalGems: player_updatePlayerTotalGems,
+			buildUpdatePlayerTotalGemsCalldata: build_player_updatePlayerTotalGems_calldata,
+			updatePlayerTotalPoints: player_updatePlayerTotalPoints,
+			buildUpdatePlayerTotalPointsCalldata: build_player_updatePlayerTotalPoints_calldata,
 		},
 	};
 }

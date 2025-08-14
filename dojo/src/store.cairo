@@ -101,8 +101,11 @@ pub impl StoreImpl of StoreTrait {
 
         let new_player = Player {
             address: caller,
+            name: '',
             current_beast_id: 0,
             total_points: 0,
+            total_coins: constants::INITIAL_COINTS,
+            total_gems: constants::INITIAL_GEMS,
             daily_streak: 0,
             last_active_day: 0,
             creation_day: Timestamp::unix_timestamp_to_day(current_timestamp),
@@ -293,7 +296,7 @@ pub impl StoreImpl of StoreTrait {
         self.world.write_model(@beast_status);
     }
 
-    fn new_beast(mut self: Store, beast_id: u16, specie: u8, beast_type: u8) {
+    fn new_beast(mut self: Store, beast_id: u16, specie: u8, beast_type: u8, name: felt252) {
         let player = get_caller_address();
         let current_timestamp = get_block_timestamp();
 
@@ -304,6 +307,7 @@ pub impl StoreImpl of StoreTrait {
             birth_date: current_timestamp,
             specie: specie,
             beast_type: beast_type,
+            name: name
         };
 
         self.world.write_model(@new_beast);

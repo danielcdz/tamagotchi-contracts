@@ -11,8 +11,8 @@ use starknet::ContractAddress;
 #[starknet::interface]
 pub trait IGame<T> {
     // ------------------------- Beast methods -------------------------
-    fn spawn_beast(ref self: T, specie: u8, beast_type: u8);
-    fn spawn_beast_custom_status(ref self: T, specie: u8, beast_type: u8, beast_status: BeastStatusCustom);
+    fn spawn_beast(ref self: T, specie: u8, beast_type: u8, name: felt252);
+    fn spawn_beast_custom_status(ref self: T, specie: u8, beast_type: u8, beast_status: BeastStatusCustom, name: felt252);
     fn update_beast(ref self: T);
     fn feed(ref self: T, food_id: u8);
     fn sleep(ref self: T);
@@ -21,6 +21,7 @@ pub trait IGame<T> {
     fn pet(ref self: T);
     fn clean(ref self: T);
     fn revive(ref self: T);
+    fn set_beast_name(ref self: T, name: felt252) -> bool;
 
     // ------------------------- Read Calls -------------------------
     fn get_timestamp_based_status(ref self: T) -> BeastStatus;
@@ -46,7 +47,7 @@ pub mod game {
     #[allow(unused_imports)]
     use tamagotchi::models::beast::{Beast, BeastTrait};
     use tamagotchi::models::beast_status::{BeastStatus, BeastStatusTrait};
-    use tamagotchi::models::player::{Player, PlayerAssert};
+    use tamagotchi::models::player::{Player, PlayerAssert, PlayerTrait};
     use tamagotchi::models::food::{Food};
 
     // Constants import
@@ -76,14 +77,14 @@ pub mod game {
     #[abi(embed_v0)]
     impl GameImpl of IGame<ContractState> {
         // ------------------------- Beast methods -------------------------
-        fn spawn_beast(ref self: ContractState, specie: u8, beast_type: u8) {
+        fn spawn_beast(ref self: ContractState, specie: u8, beast_type: u8, name: felt252) {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
             
             let current_beast_id = self.beast_counter.read();
 
             store.new_beast_status_random_values(current_beast_id);
-            store.new_beast(current_beast_id, specie, beast_type);
+            store.new_beast(current_beast_id, specie, beast_type, name);
 
             store.init_player_food_random_values(current_beast_id);
 
@@ -96,13 +97,13 @@ pub mod game {
             self.beast_counter.write(current_beast_id+1);
         }
 
-        // Unit testing only
-        fn spawn_beast_custom_status(ref self: ContractState, specie: u8, beast_type: u8, beast_status: BeastStatusCustom) {
+        // Use only for testing purposes
+        fn spawn_beast_custom_status(ref self: ContractState, specie: u8, beast_type: u8, beast_status: BeastStatusCustom, name: felt252) {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
             
             store.new_beast_status_custom_values(beast_status);
-            store.new_beast(beast_status.beast_id, specie, beast_type);
+            store.new_beast(beast_status.beast_id, specie, beast_type, name);
 
             store.init_player_food_custom_values(beast_status.beast_id);
 
@@ -315,6 +316,25 @@ pub mod game {
 
                 store.write_beast_status(@beast_status);
             }
+        }
+
+        fn set_beast_name(ref self: ContractState, name: felt252) -> bool {
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+            
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+            
+            if player.gems_balance() >= constants::CHANGE_NAME_FEE {
+                let mut beast: Beast = store.read_beast(player.current_beast_id);
+                player.decrease_total_gems(constants::CHANGE_NAME_FEE);
+                beast.set_name(name);
+                store.write_player(@player);
+                store.write_beast(@beast);
+                return true;
+            }
+            
+            return false;
         }
 
         // ------------------------- Read Calls -------------------------
