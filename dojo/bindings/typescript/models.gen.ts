@@ -1,67 +1,70 @@
 import type { SchemaType as ISchemaType } from "@dojoengine/sdk";
 
+import { Number } from 'starknet';
+
 // Type definition for `tamagotchi::models::beast::Beast` struct
 export interface Beast {
 	player: string;
-	beast_id: number;
-	age: number;
-	birth_date: number;
-	specie: number;
-	beast_type: number;
-	name: number;
+	beast_id: Number;
+	age: Number;
+	birth_date: Number;
+	specie: Number;
+	beast_type: Number;
+	name: Number;
 }
 
 // Type definition for `tamagotchi::models::beast_status::BeastStatus` struct
 export interface BeastStatus {
 	player: string;
-	beast_id: number;
+	beast_id: Number;
 	is_alive: boolean;
 	is_awake: boolean;
-	hunger: number;
-	energy: number;
-	happiness: number;
-	hygiene: number;
-	clean_status: number;
-	last_timestamp: number;
+	hunger: Number;
+	energy: Number;
+	happiness: Number;
+	hygiene: Number;
+	clean_status: Number;
+	last_timestamp: Number;
 }
 
 // Type definition for `tamagotchi::models::food::Food` struct
 export interface Food {
 	player: string;
-	id: number;
-	amount: number;
+	id: Number;
+	amount: Number;
 }
 
 // Type definition for `tamagotchi::models::highest_score::HighestScore` struct
 export interface HighestScore {
-	minigame_id: number;
+	minigame_id: Number;
 	player: string;
-	score: number;
+	score: Number;
 }
 
 // Type definition for `tamagotchi::models::player::Player` struct
 export interface Player {
 	address: string;
-	current_beast_id: number;
-	daily_streak: number;
-	total_points: number;
-	total_coins: number;
-	total_gems: number;
-	last_active_day: number;
-	creation_day: number;
+	name: Number;
+	current_beast_id: Number;
+	daily_streak: Number;
+	total_points: Number;
+	total_coins: Number;
+	total_gems: Number;
+	last_active_day: Number;
+	creation_day: Number;
 }
 
 // Type definition for `achievement::events::index::TrophyCreation` struct
 export interface TrophyCreation {
-	id: number;
+	id: Number;
 	hidden: boolean;
-	index: number;
-	points: number;
-	start: number;
-	end: number;
-	group: number;
-	icon: number;
-	title: number;
+	index: Number;
+	points: Number;
+	start: Number;
+	end: Number;
+	group: Number;
+	icon: Number;
+	title: Number;
 	description: string;
 	tasks: Array<Task>;
 	data: string;
@@ -69,16 +72,16 @@ export interface TrophyCreation {
 
 // Type definition for `achievement::events::index::TrophyProgression` struct
 export interface TrophyProgression {
-	player_id: number;
-	task_id: number;
-	count: number;
-	time: number;
+	player_id: Number;
+	task_id: Number;
+	count: Number;
+	time: Number;
 }
 
 // Type definition for `achievement::types::index::Task` struct
 export interface Task {
-	id: number;
-	total: number;
+	id: Number;
+	total: Number;
 	description: string;
 }
 
@@ -136,6 +139,7 @@ export const schema: SchemaType = {
 		},
 		Player: {
 			address: "",
+			name: 0,
 			current_beast_id: 0,
 			daily_streak: 0,
 			total_points: 0,
