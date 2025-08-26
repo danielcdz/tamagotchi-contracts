@@ -75,6 +75,10 @@ pub impl PlayerImpl of PlayerTrait {
     fn set_name(ref self: Player, name: felt252) {
         self.name = name;
     }
+
+    fn set_world_coin_address(ref self: Player, address: EthAddress) {
+        self.world_coin_address = address;
+    }
 }
 
 #[generate_trait]

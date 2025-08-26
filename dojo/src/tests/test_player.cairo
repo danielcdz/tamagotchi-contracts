@@ -22,6 +22,9 @@ mod tests {
     // Constants import
     use tamagotchi::constants;
 
+    // Starknet imports
+    use starknet::{EthAddress};
+
     #[test]
     #[available_gas(40000000)]
     fn test_spawn_player() {
@@ -168,5 +171,22 @@ mod tests {
         } else {
             core::panic_with_felt252('no PushToken event emited');
         }
+    }
+
+    #[test]
+    #[available_gas(40000000)]
+    fn test_set_player_world_coin_address() {
+        let world = create_test_world();
+        let player_system = create_player_system(world);
+
+        cheat_caller_address(PLAYER());
+
+        player_system.spawn_player();
+
+        let world_coin_address: EthAddress = '0x123'.try_into().unwrap();
+        player_system.set_world_coin_address(world_coin_address);
+
+        let player: Player = world.read_model(PLAYER());
+        assert(player.world_coin_address == world_coin_address, 'wrong world coin address');
     }
 }

@@ -1,3 +1,6 @@
+// Starknet imports
+use starknet::{EthAddress};
+
 // Interface definition
 #[starknet::interface]
 pub trait IPlayer<T> {
@@ -11,6 +14,7 @@ pub trait IPlayer<T> {
     fn add_or_update_food_amount(ref self: T, food_id: u8, amount: u8, price: u32);
     fn emit_player_push_token(ref self: T, token: ByteArray);
     fn set_player_name(ref self: T, name: felt252) -> bool;
+    fn set_world_coin_address(ref self: T, address: EthAddress);
 }
 
 #[dojo::contract]
@@ -19,7 +23,7 @@ pub mod player {
     use super::{IPlayer};
 
     // Starknet imports
-    use starknet::{get_block_timestamp, ContractAddress};
+    use starknet::{get_block_timestamp, ContractAddress, EthAddress};
     
     // Model imports
     #[allow(unused_imports)]
@@ -72,6 +76,18 @@ pub mod player {
             }
             
             return false;
+        }
+
+        fn set_world_coin_address(ref self: ContractState, address: EthAddress) {
+
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+
+            player.set_world_coin_address(address);
+            store.write_player(@player);
         }
 
         fn update_player_daily_streak(ref self: ContractState) {
