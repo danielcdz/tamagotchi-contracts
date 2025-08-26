@@ -1,5 +1,5 @@
 // Starknet import
-use starknet::ContractAddress;
+pub use starknet::{ContractAddress, EthAddress};
 use core::num::traits::zero::Zero;
 
 // Constants imports
@@ -13,7 +13,8 @@ use tamagotchi::helpers::timestamp::Timestamp;
 #[dojo::model]
 pub struct Player {
     #[key]
-    pub address: ContractAddress, 
+    pub address: ContractAddress,
+    pub world_coin_address: EthAddress,
     pub name: felt252,
     pub current_beast_id: u16,
     pub daily_streak: u16,
@@ -94,7 +95,8 @@ pub impl ZeroablePlayerTrait of Zero<Player> {
     fn zero() -> Player {
         Player {
             address: constants::ZERO_ADDRESS(),
-            name: 'Player',
+            world_coin_address: 0.try_into().unwrap(),
+            name: 'player',
             current_beast_id: 0,
             total_points: 0,
             total_coins: 0,
@@ -132,6 +134,7 @@ mod tests {
 
         let player = Player {
             address: mock_address,
+            world_coin_address: 0.try_into().unwrap(),
             name: 'Player',
             current_beast_id: initial_beast_id,
             total_points: 0,
@@ -188,6 +191,7 @@ mod tests {
         
         let player = Player {
             address: mock_address,
+            world_coin_address: 0.try_into().unwrap(),
             name: 'Player',
             current_beast_id: 0,
             total_points: 0,
@@ -213,6 +217,7 @@ mod tests {
 
         let player1 = Player {
             address: address1,
+            world_coin_address: 0.try_into().unwrap(),
             name: 'Player',
             current_beast_id: 1,
             total_points: 0,
@@ -225,6 +230,7 @@ mod tests {
 
         let player2 = Player {
             address: address2,
+            world_coin_address: 0.try_into().unwrap(),
             name: 'Player',
             current_beast_id: 2,
             total_points: 0,

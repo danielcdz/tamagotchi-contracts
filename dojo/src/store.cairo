@@ -101,6 +101,7 @@ pub impl StoreImpl of StoreTrait {
 
         let new_player = Player {
             address: caller,
+            world_coin_address: 0.try_into().unwrap(),
             name: '',
             current_beast_id: 0,
             total_points: 0,
