@@ -1,8 +1,8 @@
 {
   "world": {
     "class_hash": "0x13d92333361bb7049c1232c0a5404e2c19082ededc3a73d75cb33fa952adec7",
-    "address": "0x79b0f0159ae6655ace0db5efc04f261340dc3e6f22e59c0b46237b5e9ced055",
-    "seed": "tamagotchi3",
+    "address": "0x44d11b2f49103d6303cf860f9700820b155c12f41c18aaf576fa0a794acafd",
+    "seed": "tamagotchi4",
     "name": "ByteBeasts Tamagotchi",
     "entrypoints": [
       "uuid",
@@ -1328,8 +1328,8 @@
   },
   "contracts": [
     {
-      "address": "0x44c537565cd0b4e571614b3491fc949889cbcf0b14e17789357260cae2efff1",
-      "class_hash": "0x1c427e7abca30434a218134950f6e48b61cb015b29ed29b91f6a5fc60c49d4a",
+      "address": "0x11f07433de9a6fcfccc256f3c259e11bbbceac444a203046e0b3a54c34d3afd",
+      "class_hash": "0x419f5712020abc951a7cd8cbdb9b6c7306abdfd3fb531a02bcfcd81109833a6",
       "abi": [
         {
           "type": "impl",
@@ -1630,8 +1630,8 @@
       ]
     },
     {
-      "address": "0x2d4ac6b623b25e2af63b861ee1fc7c7a41d135f9d29577cb4e6f6a934c0564d",
-      "class_hash": "0x680da07ccb26f65ce943ebcc9c27d9d6fb542072e1fdb813cdd94f9b4b9d5de",
+      "address": "0x380bb3e194c5e8a158ade92494e17d05bf980987ce99dc5a8a7cbc3ca0b55d3",
+      "class_hash": "0x3d6f4f8c71bfc34d33a153ce97278e7965248af6ec9e8812d958ccc06563b8a",
       "abi": [
         {
           "type": "impl",
@@ -2110,8 +2110,8 @@
       ]
     },
     {
-      "address": "0x38e837b4e9e5f2c08acecca5c464740d2fd35fb500b0914a4962e8d59ee0d8b",
-      "class_hash": "0x31417dbe7f66a739c15039402845089eb33c69ff2ee723330076a0442ed2b13",
+      "address": "0x39fe46386b8004555a807c981b43fa26f8d0447cdaf253ef112d75d467a3891",
+      "class_hash": "0x1c1aa91770e417206ccfd8030afff2e3f40681c4acf4cd2d24cb74adfdedc1d",
       "abi": [
         {
           "type": "impl",
@@ -2186,6 +2186,16 @@
             {
               "name": "True",
               "type": "()"
+            }
+          ]
+        },
+        {
+          "type": "struct",
+          "name": "core::starknet::eth_address::EthAddress",
+          "members": [
+            {
+              "name": "address",
+              "type": "core::felt252"
             }
           ]
         },
@@ -2305,6 +2315,18 @@
                   "type": "core::bool"
                 }
               ],
+              "state_mutability": "external"
+            },
+            {
+              "type": "function",
+              "name": "set_world_coin_address",
+              "inputs": [
+                {
+                  "name": "address",
+                  "type": "core::starknet::eth_address::EthAddress"
+                }
+              ],
+              "outputs": [],
               "state_mutability": "external"
             }
           ]
@@ -2431,6 +2453,7 @@
         "add_or_update_food_amount",
         "emit_player_push_token",
         "set_player_name",
+        "set_world_coin_address",
         "upgrade"
       ]
     }
@@ -2463,7 +2486,7 @@
     },
     {
       "members": [],
-      "class_hash": "0x43fd5fafe4726fbed3386d73007df33ff4e6d6966b870c9ce950b06d598b292",
+      "class_hash": "0x4ce9d7dab12c4b30e429da5eb0325fd7ccf2c48198659a1146e04bdc5e2f1f4",
       "tag": "tamagotchi-Player",
       "selector": "0x3c2b9e38bb17747db3008b613c6b1ef5f9a6bcd4c1f40f329e7ff691aafa1e2"
     }

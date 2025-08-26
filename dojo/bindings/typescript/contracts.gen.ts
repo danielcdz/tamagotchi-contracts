@@ -613,6 +613,27 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
+	const build_player_setWorldCoinAddress_calldata = (address: string): DojoCall => {
+		return {
+			contractName: "player",
+			entrypoint: "set_world_coin_address",
+			calldata: [address],
+		};
+	};
+
+	const player_setWorldCoinAddress = async (snAccount: Account | AccountInterface, address: string) => {
+		try {
+			return await provider.execute(
+				snAccount,
+				build_player_setWorldCoinAddress_calldata(address),
+				"tamagotchi",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
 	const build_player_spawnPlayer_calldata = (): DojoCall => {
 		return {
 			contractName: "player",
@@ -805,6 +826,8 @@ export function setupWorld(provider: DojoProvider) {
 			buildEmitPlayerPushTokenCalldata: build_player_emitPlayerPushToken_calldata,
 			setPlayerName: player_setPlayerName,
 			buildSetPlayerNameCalldata: build_player_setPlayerName_calldata,
+			setWorldCoinAddress: player_setWorldCoinAddress,
+			buildSetWorldCoinAddressCalldata: build_player_setWorldCoinAddress_calldata,
 			spawnPlayer: player_spawnPlayer,
 			buildSpawnPlayerCalldata: build_player_spawnPlayer_calldata,
 			updatePlayerDailyStreak: player_updatePlayerDailyStreak,
