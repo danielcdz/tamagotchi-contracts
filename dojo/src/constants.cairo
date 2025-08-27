@@ -106,3 +106,6 @@ pub const INITIAL_GEMS: u32 = 0;
 // Minimun balance for change name
 pub const CHANGE_NAME_FEE: u32 = 5;
 
+// Minimun balance for revive
+pub const REVIVE_FEE: u32 = 20;
+

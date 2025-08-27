@@ -301,20 +301,23 @@ pub mod game {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
             
-            let player: Player = store.read_player();
+            let mut player: Player = store.read_player();
             player.assert_exists();
 
             // Status retrieved by calculation
             let mut beast_status = self.get_timestamp_based_status();
 
             if beast_status.is_alive == false {
-                beast_status.is_alive = true;
-                beast_status.hunger = 100;
-                beast_status.energy = 100;
-                beast_status.happiness = 100;
-                beast_status.hygiene = 100;
-
-                store.write_beast_status(@beast_status);
+                if player.gems_balance() >= constants::REVIVE_FEE {
+                    player.decrease_total_gems(constants::REVIVE_FEE);
+                    beast_status.is_alive = true;
+                    beast_status.hunger = 100;
+                    beast_status.energy = 100;
+                    beast_status.happiness = 100;
+                    beast_status.hygiene = 100;
+                    store.write_player(@player);
+                    store.write_beast_status(@beast_status);
+                }
             }
         }
 
