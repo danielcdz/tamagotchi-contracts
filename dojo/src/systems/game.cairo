@@ -19,6 +19,7 @@ pub trait IGame<T> {
     fn awake(ref self: T);
     fn play(ref self: T);
     fn pet(ref self: T);
+    fn max_energy(ref self: T);
     fn clean(ref self: T);
     fn revive(ref self: T);
     fn set_beast_name(ref self: T, name: felt252) -> bool;
@@ -266,6 +267,22 @@ pub mod game {
                 if beast_status.happiness > constants::MAX_HAPPINESS {
                     beast_status.happiness = constants::MAX_HAPPINESS;
                 }
+                store.write_beast_status(@beast_status);
+            }
+        }
+
+        fn max_energy(ref self: ContractState) {
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+            
+            let player: Player = store.read_player();
+            player.assert_exists();
+
+            // Status retrieved by calculation
+            let mut beast_status = self.get_timestamp_based_status();
+
+            if beast_status.is_alive == true {
+                beast_status.energy = constants::MAX_ENERGY;
                 store.write_beast_status(@beast_status);
             }
         }
