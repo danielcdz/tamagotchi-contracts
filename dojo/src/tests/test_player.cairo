@@ -68,7 +68,7 @@ mod tests {
         };
         
         // Spawn a beast first
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 17); // Spawn beast with specie 1
 
         // Set current beast
         let beast_id: u16 = 1;
