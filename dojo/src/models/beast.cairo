@@ -120,10 +120,37 @@ pub impl BeastImpl of BeastTrait {
         *common_food_ids.at(random_index.into())
     }
 
+    fn is_magic_food(ref self: Beast, food_id: u8) -> bool {
+        let food_type: FoodType = food_id.into();
+        match food_type {
+            FoodType::SparkCherry => true,
+            FoodType::FeastApple => true,
+            FoodType::JoyMango => true,
+            FoodType::TriBoostSmoothie => true,
+            _ => false,
+        }
+    }
+
+    fn feed_with_magic_food(ref self: Beast, food_id: u8) -> (u8, u8, u8) {
+        let food_type: FoodType = food_id.into();
+        match food_type {
+            // (hunger, happiness, energy)
+            FoodType::SparkCherry => (0, 0, constants::MAX_ENERGY),
+            FoodType::FeastApple => (constants::MAX_HUNGER, 0, 0),
+            FoodType::JoyMango => (0, constants::MAX_HAPPINESS, 0),
+            FoodType::TriBoostSmoothie => (constants::MAX_HUNGER, constants::MAX_HAPPINESS, constants::MAX_ENERGY),
+            _ => (0, 0, 0),
+        }
+    }
+
     fn feed(ref self: Beast, food_id: u8) -> (u8, u8, u8) {
         if self.is_favorite_meal(food_id){
             // (hunger, happiness, energy)
             (constants::L_UPDATE_POINTS, constants::S_UPDATE_POINTS, constants::XS_UPDATE_POINTS)
+        }
+        else if self.is_magic_food(food_id){
+            // (hunger, happiness, energy)
+            self.feed_with_magic_food(food_id)
         }
         else{
             // (hunger, happiness, energy)
