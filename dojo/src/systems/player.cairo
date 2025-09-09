@@ -15,6 +15,7 @@ pub trait IPlayer<T> {
     fn emit_player_push_token(ref self: T, token: ByteArray);
     fn set_player_name(ref self: T, name: felt252) -> bool;
     fn set_world_coin_address(ref self: T, address: EthAddress);
+    fn purchase_with_gems(ref self: T, gems: u32) -> bool;
 }
 
 #[dojo::contract]
@@ -189,5 +190,25 @@ pub mod player {
 
             world.emit_event(@PushToken { player_address, token });
         }
+
+        fn purchase_with_gems(ref self: ContractState, gems: u32) -> bool {
+            let mut world = self.world(@"tamagotchi");
+            let store = StoreTrait::new(world);
+
+            let mut player: Player = store.read_player();
+            player.assert_exists();
+
+            if player.gems_balance() >= gems {
+
+                player.decrease_total_gems(gems);
+
+                store.write_player(@player);
+
+                return true;
+            } 
+
+            return false;
+        }
+
     }
 }

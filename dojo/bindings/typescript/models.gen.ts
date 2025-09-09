@@ -44,7 +44,7 @@ export interface HighestScore {
 // Type definition for `tamagotchi::models::player::Player` struct
 export interface Player {
 	address: string;
-	world_coin_address: string;
+	world_coin_address: EthAddress;
 	name: Number;
 	current_beast_id: Number;
 	daily_streak: Number;
@@ -140,7 +140,7 @@ export const schema: SchemaType = {
 		},
 		Player: {
 			address: "",
-		world_coin_address: string,
+		world_coin_address: EthAddress,
 			name: 0,
 			current_beast_id: 0,
 			daily_streak: 0,

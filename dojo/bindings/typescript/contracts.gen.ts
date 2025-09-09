@@ -382,6 +382,27 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
+	const build_game_maxEnergy_calldata = (): DojoCall => {
+		return {
+			contractName: "game",
+			entrypoint: "max_energy",
+			calldata: [],
+		};
+	};
+
+	const game_maxEnergy = async (snAccount: Account | AccountInterface) => {
+		try {
+			return await provider.execute(
+				snAccount,
+				build_game_maxEnergy_calldata(),
+				"tamagotchi",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
 	const build_game_pet_calldata = (): DojoCall => {
 		return {
 			contractName: "game",
@@ -592,6 +613,27 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
+	const build_player_purchaseWithGems_calldata = (gems: Number): DojoCall => {
+		return {
+			contractName: "player",
+			entrypoint: "purchase_with_gems",
+			calldata: [gems],
+		};
+	};
+
+	const player_purchaseWithGems = async (snAccount: Account | AccountInterface, gems: Number) => {
+		try {
+			return await provider.execute(
+				snAccount,
+				build_player_purchaseWithGems_calldata(gems),
+				"tamagotchi",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
 	const build_player_setPlayerName_calldata = (name: Number): DojoCall => {
 		return {
 			contractName: "player",
@@ -613,7 +655,7 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_player_setWorldCoinAddress_calldata = (address: string): DojoCall => {
+	const build_player_setWorldCoinAddress_calldata = (address: EthAddress): DojoCall => {
 		return {
 			contractName: "player",
 			entrypoint: "set_world_coin_address",
@@ -621,7 +663,7 @@ export function setupWorld(provider: DojoProvider) {
 		};
 	};
 
-	const player_setWorldCoinAddress = async (snAccount: Account | AccountInterface, address: string) => {
+	const player_setWorldCoinAddress = async (snAccount: Account | AccountInterface, address: EthAddress) => {
 		try {
 			return await provider.execute(
 				snAccount,
@@ -802,6 +844,8 @@ export function setupWorld(provider: DojoProvider) {
 			buildGetTimestampBasedStatusCalldata: build_game_getTimestampBasedStatus_calldata,
 			getTimestampBasedStatusWithAddress: game_getTimestampBasedStatusWithAddress,
 			buildGetTimestampBasedStatusWithAddressCalldata: build_game_getTimestampBasedStatusWithAddress_calldata,
+			maxEnergy: game_maxEnergy,
+			buildMaxEnergyCalldata: build_game_maxEnergy_calldata,
 			pet: game_pet,
 			buildPetCalldata: build_game_pet_calldata,
 			play: game_play,
@@ -824,6 +868,8 @@ export function setupWorld(provider: DojoProvider) {
 			buildAddOrUpdateFoodAmountCalldata: build_player_addOrUpdateFoodAmount_calldata,
 			emitPlayerPushToken: player_emitPlayerPushToken,
 			buildEmitPlayerPushTokenCalldata: build_player_emitPlayerPushToken_calldata,
+			purchaseWithGems: player_purchaseWithGems,
+			buildPurchaseWithGemsCalldata: build_player_purchaseWithGems_calldata,
 			setPlayerName: player_setPlayerName,
 			buildSetPlayerNameCalldata: build_player_setPlayerName_calldata,
 			setWorldCoinAddress: player_setWorldCoinAddress,
