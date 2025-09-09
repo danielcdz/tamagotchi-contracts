@@ -18,6 +18,10 @@ pub enum FoodType {
     Pizza,
     Corn,
     Potato,
+    SparkCherry,
+    FeastApple,
+    JoyMango,
+    TriBoostSmoothie,
     None
 }
 
@@ -42,6 +46,10 @@ pub impl IntoFoodTypeFelt252 of Into<FoodType, felt252> {
             FoodType::Pizza => 'Pizza',
             FoodType::Corn => 'Corn',
             FoodType::Potato => 'Potato',
+            FoodType::SparkCherry => 'Spark Cherry',
+            FoodType::FeastApple => 'Feast Apple',
+            FoodType::JoyMango => 'Joy Mango',
+            FoodType::TriBoostSmoothie => 'Tri Boost Smoothie',
         }
     }
 }
@@ -67,6 +75,10 @@ pub impl IntoFoodTypeU8 of Into<FoodType, u8> {
             FoodType::Pizza => 14,
             FoodType::Corn => 15,
             FoodType::Potato => 16,
+            FoodType::SparkCherry => 17,
+            FoodType::FeastApple => 18,
+            FoodType::JoyMango => 19,
+            FoodType::TriBoostSmoothie => 20,
         }
     }
 }
@@ -93,6 +105,10 @@ pub impl IntoU8FoodType of Into<u8, FoodType> {
             14 => FoodType::Pizza,
             15 => FoodType::Corn,
             16 => FoodType::Potato,
+            17 => FoodType::SparkCherry,
+            18 => FoodType::FeastApple,
+            19 => FoodType::JoyMango,
+            20 => FoodType::TriBoostSmoothie,
             _  => FoodType::None,
         }
     }

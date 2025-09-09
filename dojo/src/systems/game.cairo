@@ -12,7 +12,7 @@ use starknet::ContractAddress;
 pub trait IGame<T> {
     // ------------------------- Beast methods -------------------------
     fn spawn_beast(ref self: T, specie: u8, beast_type: u8, name: felt252);
-    fn spawn_beast_custom_status(ref self: T, specie: u8, beast_type: u8, beast_status: BeastStatusCustom, name: felt252);
+    fn spawn_beast_custom_status(ref self: T, specie: u8, beast_type: u8, beast_status: BeastStatusCustom, name: felt252, magic_food_id: u8);
     fn update_beast(ref self: T);
     fn feed(ref self: T, food_id: u8);
     fn sleep(ref self: T);
@@ -99,7 +99,7 @@ pub mod game {
         }
 
         // Use only for testing purposes
-        fn spawn_beast_custom_status(ref self: ContractState, specie: u8, beast_type: u8, beast_status: BeastStatusCustom, name: felt252) {
+        fn spawn_beast_custom_status(ref self: ContractState, specie: u8, beast_type: u8, beast_status: BeastStatusCustom, name: felt252, magic_food_id: u8) {
             let mut world = self.world(@"tamagotchi");
             let store = StoreTrait::new(world);
             
@@ -107,6 +107,8 @@ pub mod game {
             store.new_beast(beast_status.beast_id, specie, beast_type, name);
 
             store.init_player_food_custom_values(beast_status.beast_id);
+
+            store.init_player_magic_food(beast_status.beast_id, magic_food_id);
 
             let mut player: Player = store.read_player();
             player.assert_exists();

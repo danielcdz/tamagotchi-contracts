@@ -21,6 +21,9 @@ mod tests {
     use tamagotchi::types::beast_status_custom::{BeastStatusCustom};
     use tamagotchi::types::clean_status::{CleanStatus};
 
+    // Constants import
+    use tamagotchi::constants;
+
     #[test]
     #[available_gas(60000000)]
     fn test_add_initial_food() {
@@ -45,7 +48,7 @@ mod tests {
 
         // Initialize player
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast');
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 17);
         
 
         let mut food_count = 0;
@@ -90,7 +93,7 @@ mod tests {
 
         // Create player, food, and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 3, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 3, custom_beast_status, 'test-beast', 17); // Spawn beast with specie 1
         
 
         // Get initial status
@@ -140,7 +143,7 @@ mod tests {
 
         // Create player, food, and beast
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 17); // Spawn beast with specie 1
         
 
         // Get initial status
@@ -167,6 +170,156 @@ mod tests {
     }
 
     #[test]
+    fn test_feed_beast_with_magic_food_spark_cherry() {
+        // Initialize test environment
+        let world = create_test_world();
+        let game_system = create_game_system(world);
+        let player_system = create_player_system(world);
+
+        cheat_caller_address(PLAYER());
+        cheat_block_timestamp(7000000);
+
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 55,
+            energy: 43,
+            happiness: 23,
+            hygiene: 67,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
+        // Create player, food, and beast
+        player_system.spawn_player();
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 17); // Spawn beast with specie 1
+        
+
+        // Increase status
+        game_system.feed(17);
+
+        // Get updated status
+        let updated_status: BeastStatus = game_system.get_timestamp_based_status();
+
+        // Verify hunger and energy decreased
+        assert(updated_status.energy == constants::MAX_ENERGY, 'energy not maxed');
+    }
+
+    #[test]
+    fn test_feed_beast_with_magic_food_feast_apple() {
+        // Initialize test environment
+        let world = create_test_world();
+        let game_system = create_game_system(world);
+        let player_system = create_player_system(world);
+
+        cheat_caller_address(PLAYER());
+        cheat_block_timestamp(7000000);
+
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 55,
+            energy: 43,
+            happiness: 23,
+            hygiene: 67,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
+        // Create player, food, and beast
+        player_system.spawn_player();
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 18); // Spawn beast with specie 1
+        
+
+        // Increase status
+        game_system.feed(18);
+
+        // Get updated status
+        let updated_status: BeastStatus = game_system.get_timestamp_based_status();
+
+        // Verify hunger and energy decreased
+        assert(updated_status.hunger == constants::MAX_HUNGER, 'hunger not maxed');
+    }
+
+    #[test]
+    fn test_feed_beast_with_magic_food_joy_mango() {
+        // Initialize test environment
+        let world = create_test_world();
+        let game_system = create_game_system(world);
+        let player_system = create_player_system(world);
+
+        cheat_caller_address(PLAYER());
+        cheat_block_timestamp(7000000);
+
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 55,
+            energy: 43,
+            happiness: 23,
+            hygiene: 67,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
+        // Create player, food, and beast
+        player_system.spawn_player();
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 19); // Spawn beast with specie 1
+        
+
+        // Increase status
+        game_system.feed(19);
+
+        // Get updated status
+        let updated_status: BeastStatus = game_system.get_timestamp_based_status();
+
+        // Verify hunger and energy decreased
+        assert(updated_status.happiness == constants::MAX_HAPPINESS, 'happiness not maxed');
+    }
+
+    #[test]
+    fn test_feed_beast_with_magic_food_tri_boost_smoothie() {
+        // Initialize test environment
+        let world = create_test_world();
+        let game_system = create_game_system(world);
+        let player_system = create_player_system(world);
+
+        cheat_caller_address(PLAYER());
+        cheat_block_timestamp(7000000);
+
+        let custom_beast_status =  BeastStatusCustom {
+            beast_id: 1,
+            is_alive: true,
+            is_awake: true,
+            hunger: 55,
+            energy: 43,
+            happiness: 23,
+            hygiene: 67,
+            clean_status: CleanStatus::Clean.into(),
+            last_timestamp: 7000000,
+        };
+
+        // Create player, food, and beast
+        player_system.spawn_player();
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 20); // Spawn beast with specie 1
+        
+
+        // Increase status
+        game_system.feed(20);
+
+        // Get updated status
+        let updated_status: BeastStatus = game_system.get_timestamp_based_status();
+
+        // Verify hunger and energy decreased
+        assert(updated_status.hunger == constants::MAX_HUNGER, 'hunger not maxed');
+        assert(updated_status.happiness == constants::MAX_HAPPINESS, 'happiness not maxed');
+        assert(updated_status.energy == constants::MAX_ENERGY, 'energy not maxed');
+    }
+
+    #[test]
     #[available_gas(60000000)]
     fn test_update_food_amount() {
         // Initialize test environment
@@ -190,7 +343,7 @@ mod tests {
 
         // Initialize player and add initial food
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 17); // Spawn beast with specie 1
         
 
         let test_food_id: u8 = 5; // CakeChocolate
@@ -256,7 +409,7 @@ mod tests {
         assert(initial_food_count == 0, 'Food exists before beast');
 
         // Create beast (which should trigger food initialization internally)
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 17); // Spawn beast with specie 1
         
 
         // Verify that food was created after beast creation
@@ -299,7 +452,7 @@ mod tests {
 
         // Initialize player and add initial food
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 17); // Spawn beast with specie 1
         
 
         let test_food_id: u8 = 1; // Apple
@@ -369,7 +522,7 @@ mod tests {
 
         // Initialize player
         player_system.spawn_player();
-        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast'); // Spawn beast with specie 1 (Light)
+        game_system.spawn_beast_custom_status(1, 1, custom_beast_status, 'test-beast', 17); // Spawn beast with specie 1 (Light)
         
 
         // Create different food types
