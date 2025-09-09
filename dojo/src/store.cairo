@@ -137,6 +137,10 @@ pub impl StoreImpl of StoreTrait {
             FoodType::Pizza => self.new_pizzas(caller, amount),
             FoodType::Corn => self.new_corns(caller, amount),
             FoodType::Potato => self.new_potatoes(caller, amount),
+            FoodType::SparkCherry => self.new_spark_cherry(caller, amount),
+            FoodType::FeastApple => self.new_feast_apple(caller, amount),
+            FoodType::JoyMango => self.new_joy_mango(caller, amount),
+            FoodType::TriBoostSmoothie => self.new_tri_boost_smoothie(caller, amount),
             _ => {}
         }
 
@@ -254,6 +258,34 @@ pub impl StoreImpl of StoreTrait {
         self.world.write_model(@potatoes);
     }
 
+    fn new_spark_cherry(mut self: Store, caller: ContractAddress, amount: u8) {
+        let spark_cherry = Food {
+            player: caller, id: FoodType::SparkCherry.into(), amount: amount,
+        };
+        self.world.write_model(@spark_cherry);
+    }
+
+    fn new_feast_apple(mut self: Store, caller: ContractAddress, amount: u8) {
+        let feast_apple = Food {
+            player: caller, id: FoodType::FeastApple.into(), amount: amount,
+        };
+        self.world.write_model(@feast_apple);
+    }
+
+    fn new_joy_mango(mut self: Store, caller: ContractAddress, amount: u8) {
+        let joy_mango = Food {
+            player: caller, id: FoodType::JoyMango.into(), amount: amount,
+        };
+        self.world.write_model(@joy_mango);
+    }
+
+    fn new_tri_boost_smoothie(mut self: Store, caller: ContractAddress, amount: u8) {
+        let tri_boost_smoothie = Food {
+            player: caller, id: FoodType::TriBoostSmoothie.into(), amount: amount,
+        };
+        self.world.write_model(@tri_boost_smoothie);
+    }
+
     fn init_player_food_random_values(mut self: Store, beast_id: u16) {
         // Read the beast instance
         let beast = self.read_beast(beast_id);
@@ -279,6 +311,10 @@ pub impl StoreImpl of StoreTrait {
         // Create both foods for the player with the initial amount
         self.new_food(favorite_food_id, constants::MAX_FOOD_AMOUNT);
         self.new_food(common_food_id, constants::MAX_FOOD_AMOUNT);
+    }
+
+    fn init_player_magic_food(mut self: Store, beast_id: u16, magic_food_id: u8) {
+        self.new_food(magic_food_id, constants::MAX_FOOD_AMOUNT);
     }
 
     fn new_beast_status_random_values(mut self: Store, beast_id: u16) {
