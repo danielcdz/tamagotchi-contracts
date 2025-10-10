@@ -1,10 +1,6 @@
 pub mod constants;
 pub mod store;
 
-pub mod achievements{
-    pub mod achievement;
-}
-
 pub mod helpers {
     pub mod timestamp;
     pub mod pseudo_random;
@@ -14,7 +10,6 @@ pub mod helpers {
 pub mod systems {
     pub mod game;
     pub mod player;
-    pub mod achieve;
 }
 
 pub mod models {

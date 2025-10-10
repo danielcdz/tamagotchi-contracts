@@ -2,39 +2,34 @@
 version = 1
 
 [[package]]
-name = "achievement"
-version = "0.0.0"
-source = "git+https://github.com/cartridge-gg/arcade?tag=v1.6.1#6438a74b589c3cac19b9782709e3845215ec67d6"
+name = "dojo"
+version = "1.7.1"
+source = "registry+https://scarbs.xyz/"
+checksum = "sha256:b792d9c526269f5265dd89f063da5db8daebb461f2dec2cdb712f420187b39a8"
 dependencies = [
- "dojo",
+ "dojo_cairo_macros",
 ]
 
 [[package]]
-name = "dojo"
-version = "1.6.1"
-source = "git+https://github.com/dojoengine/dojo?tag=v1.6.1#a4f9445cf925e999d97038f596806ec307981a9b"
-dependencies = [
- "dojo_plugin",
-]
+name = "dojo_cairo_macros"
+version = "1.7.1"
+source = "registry+https://scarbs.xyz/"
+checksum = "sha256:18059a9ac9ec2c0c708baad382728a99970b621b1eaab780fd9a8ec2dc975c98"
 
 [[package]]
 name = "dojo_cairo_test"
-version = "1.6.1"
-source = "git+https://github.com/dojoengine/dojo?tag=v1.6.1#a4f9445cf925e999d97038f596806ec307981a9b"
+version = "1.7.1"
+source = "registry+https://scarbs.xyz/"
+checksum = "sha256:93fba9557e34d0aa0903092e8f32560b0ce72b66dceea2a51fd571b1217351e3"
 dependencies = [
  "dojo",
 ]
-
-[[package]]
-name = "dojo_plugin"
-version = "2.10.1"
-source = "git+https://github.com/dojoengine/dojo?tag=v1.6.1#a4f9445cf925e999d97038f596806ec307981a9b"
 
 [[package]]
 name = "tamagotchi"
 version = "0.1.0"
 dependencies = [
- "achievement",
  "dojo",
+ "dojo_cairo_macros",
  "dojo_cairo_test",
 ]

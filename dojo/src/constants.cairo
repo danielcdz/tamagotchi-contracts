@@ -1,4 +1,5 @@
 // Starknet import
+#[feature("deprecated-starknet-consts")]
 use starknet::{ContractAddress, contract_address_const};
 
 // Max status values for a Beast

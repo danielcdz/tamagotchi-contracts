@@ -1,5 +1,6 @@
 // Imports
 use tamagotchi::interfaces::vrf::{IVrfProviderDispatcher, IVrfProviderDispatcherTrait};
+#[feature("deprecated-starknet-consts")]
 use starknet::{ContractAddress, get_block_timestamp, get_caller_address, contract_address_const};
 use core::poseidon::poseidon_hash_span;
 use tamagotchi::interfaces::vrf::Source;

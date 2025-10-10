@@ -1,8 +1,8 @@
 # The World address to index.
-world_address = "0x044fcdf4bd07cacbd9d495f5b34c20bbf31016ea1a1d20fe6cdddb1ef5c01b63"
+world_address = "0x029ac3fd304d4e8bf2151fd309a96dbd978a2d11754ac61c490acf7094e295fe"
  
 # Default RPC URL configuration
-rpc = "https://api.cartridge.gg/x/starknet/mainnet/rpc/v0_9"
+rpc = "https://api.cartridge.gg/x/starknet/mainnet"
 
 # Indexing Options
 [indexing]
@@ -14,6 +14,3 @@ contracts = []
 
 [events]
 raw = true
-
-[sql]
-historical = ["tamagotchi-TrophyProgression"] 
